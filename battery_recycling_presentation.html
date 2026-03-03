@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>USA Battery Recycling - Equipment Recommendation</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <title>USA Battery Recycling Plant | Complete Equipment Guide</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -13,13 +13,18 @@
         }
         
         :root {
-            --primary: #0f172a;
-            --secondary: #1e293b;
-            --accent: #10b981;
-            --accent-light: #34d399;
-            --text: #f8fafc;
-            --text-muted: #94a3b8;
-            --border: #334155;
+            --bg-dark: #0a0a0f;
+            --bg-card: #12121a;
+            --bg-elevated: #1a1a25;
+            --neon-green: #00ff88;
+            --neon-cyan: #00d4ff;
+            --neon-purple: #a855f7;
+            --neon-orange: #ff6b35;
+            --neon-red: #ff3366;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0b0;
+            --text-muted: #606070;
+            --border-color: #2a2a3a;
         }
         
         html {
@@ -27,10 +32,48 @@
         }
         
         body {
-            font-family: 'Inter', sans-serif;
-            background: var(--primary);
-            color: var(--text);
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-primary);
             line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        /* Animated Background */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: 
+                radial-gradient(ellipse at 20% 20%, rgba(0, 255, 136, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(0, 212, 255, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(168, 85, 247, 0.05) 0%, transparent 50%);
+        }
+        
+        .grid-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background-image: 
+                linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+            background-size: 50px 50px;
+        }
+        
+        /* Typography */
+        h1, h2, h3, h4 {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+        }
+        
+        .mono {
+            font-family: 'Space Mono', monospace;
         }
         
         /* Hero Section */
@@ -41,252 +84,400 @@
             justify-content: center;
             align-items: center;
             text-align: center;
-            padding: 60px 20px;
-            background: linear-gradient(135deg, var(--primary) 0%, #1a1a2e 50%, #16213e 100%);
+            padding: 40px 20px;
             position: relative;
-            overflow: hidden;
         }
         
         .hero::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2310b981' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-            opacity: 0.5;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(0, 255, 136, 0.15) 0%, transparent 70%);
+            filter: blur(60px);
+            animation: pulse 4s ease-in-out infinite;
         }
         
-        .hero-content {
-            position: relative;
-            z-index: 1;
-            max-width: 900px;
+        @keyframes pulse {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
+            50% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.8; }
+        }
+        
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: rgba(0, 255, 136, 0.1);
+            border: 1px solid rgba(0, 255, 136, 0.3);
+            border-radius: 50px;
+            font-size: 0.85rem;
+            color: var(--neon-green);
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .hero-badge::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: var(--neon-green);
+            border-radius: 50%;
+            animation: blink 1.5s infinite;
+        }
+        
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
         }
         
         .hero h1 {
-            font-size: clamp(2rem, 5vw, 3.5rem);
-            font-weight: 700;
+            font-size: clamp(2.5rem, 6vw, 5rem);
+            font-weight: 800;
             margin-bottom: 20px;
-            background: linear-gradient(135deg, var(--text) 0%, var(--accent-light) 100%);
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--neon-green) 50%, var(--neon-cyan) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            line-height: 1.1;
         }
         
         .hero .subtitle {
-            font-size: clamp(1rem, 2.5vw, 1.5rem);
-            color: var(--text-muted);
-            margin-bottom: 40px;
-            font-weight: 400;
-        }
-        
-        .metrics {
-            display: flex;
-            justify-content: center;
-            gap: 40px;
-            flex-wrap: wrap;
+            font-size: clamp(1rem, 2vw, 1.4rem);
+            color: var(--text-secondary);
+            max-width: 700px;
             margin-bottom: 50px;
         }
         
-        .metric {
-            background: rgba(16, 185, 129, 0.1);
-            border: 1px solid rgba(16, 185, 129, 0.3);
-            padding: 20px 30px;
-            border-radius: 12px;
+        /* Metrics Grid */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            max-width: 900px;
+            width: 100%;
+        }
+        
+        .metric-card {
+            background: rgba(18, 18, 26, 0.8);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 25px;
             backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
         }
         
-        .metric-value {
-            font-size: 1.8rem;
+        .metric-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--neon-green), var(--neon-cyan));
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .metric-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--neon-green);
+            box-shadow: 0 20px 40px rgba(0, 255, 136, 0.1);
+        }
+        
+        .metric-card:hover::before {
+            opacity: 1;
+        }
+        
+        .metric-card .value {
+            font-size: 2rem;
             font-weight: 700;
-            color: var(--accent);
-            display: block;
+            color: var(--neon-green);
+            font-family: 'Space Mono', monospace;
         }
         
-        .metric-label {
+        .metric-card .label {
             font-size: 0.85rem;
             color: var(--text-muted);
             text-transform: uppercase;
             letter-spacing: 1px;
-        }
-        
-        .scroll-indicator {
-            position: absolute;
-            bottom: 40px;
-            left: 50%;
-            transform: translateX(-50%);
-            animation: bounce 2s infinite;
-        }
-        
-        .scroll-indicator svg {
-            width: 30px;
-            height: 30px;
-            stroke: var(--accent);
-        }
-        
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
-            40% { transform: translateX(-50%) translateY(-10px); }
-            60% { transform: translateX(-50%) translateY(-5px); }
+            margin-top: 5px;
         }
         
         /* Section Styles */
         section {
             padding: 100px 20px;
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
         }
         
-        .section-title {
-            font-size: 2rem;
-            font-weight: 600;
-            margin-bottom: 40px;
+        .section-header {
             text-align: center;
-            position: relative;
+            margin-bottom: 60px;
         }
         
-        .section-title::after {
-            content: '';
-            display: block;
-            width: 60px;
-            height: 3px;
-            background: var(--accent);
-            margin: 15px auto 0;
-            border-radius: 2px;
-        }
-        
-        /* Equipment Section */
-        .equipment-grid {
-            display: grid;
-            gap: 15px;
-        }
-        
-        .equipment-row {
-            display: grid;
-            grid-template-columns: 50px 1fr 1fr 120px;
-            gap: 15px;
-            align-items: center;
-            background: var(--secondary);
-            padding: 20px;
-            border-radius: 10px;
-            border: 1px solid var(--border);
-            transition: all 0.3s ease;
-        }
-        
-        .equipment-row:hover {
-            border-color: var(--accent);
-            transform: translateX(5px);
-        }
-        
-        .equipment-row.header {
-            background: transparent;
-            border: none;
-            font-weight: 600;
+        .section-number {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.85rem;
+            color: var(--neon-cyan);
             text-transform: uppercase;
-            font-size: 0.8rem;
-            letter-spacing: 1px;
-            color: var(--text-muted);
+            letter-spacing: 3px;
+            margin-bottom: 15px;
+            display: block;
         }
         
-        .stage-num {
-            width: 40px;
-            height: 40px;
-            background: var(--accent);
-            color: var(--primary);
-            border-radius: 50%;
+        .section-title {
+            font-size: clamp(1.8rem, 4vw, 2.8rem);
+            margin-bottom: 15px;
+        }
+        
+        .section-subtitle {
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        /* Process Flow */
+        .process-flow {
+            display: grid;
+            gap: 15px;
+        }
+        
+        .process-step {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 30px;
+            display: grid;
+            grid-template-columns: 60px 1fr auto;
+            gap: 25px;
+            align-items: center;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .process-step::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(180deg, var(--neon-green), var(--neon-cyan));
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .process-step:hover {
+            border-color: var(--neon-green);
+            transform: translateX(10px);
+            box-shadow: 0 10px 40px rgba(0, 255, 136, 0.1);
+        }
+        
+        .process-step:hover::before {
+            opacity: 1;
+        }
+        
+        .step-number {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--neon-green), var(--neon-cyan));
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
+            font-size: 1.5rem;
             font-weight: 700;
-            font-size: 0.9rem;
+            color: var(--bg-dark);
+        }
+        
+        .step-content h3 {
+            font-size: 1.3rem;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+        }
+        
+        .step-content p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+        
+        .step-meta {
+            text-align: right;
         }
         
         .supplier-tag {
             display: inline-block;
-            padding: 4px 12px;
+            padding: 6px 14px;
             border-radius: 20px;
             font-size: 0.75rem;
             font-weight: 600;
             text-transform: uppercase;
-        }
-        
-        .supplier-tag.western {
-            background: rgba(59, 130, 246, 0.2);
-            color: #60a5fa;
-            border: 1px solid rgba(59, 130, 246, 0.4);
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
         }
         
         .supplier-tag.china {
-            background: rgba(239, 68, 68, 0.2);
+            background: rgba(239, 68, 68, 0.15);
             color: #f87171;
-            border: 1px solid rgba(239, 68, 68, 0.4);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+        
+        .supplier-tag.western {
+            background: rgba(59, 130, 246, 0.15);
+            color: #60a5fa;
+            border: 1px solid rgba(59, 130, 246, 0.3);
         }
         
         .supplier-tag.safety {
-            background: rgba(16, 185, 129, 0.2);
-            color: var(--accent-light);
-            border: 1px solid rgba(16, 185, 129, 0.4);
+            background: rgba(0, 255, 136, 0.15);
+            color: var(--neon-green);
+            border: 1px solid rgba(0, 255, 136, 0.3);
+        }
+        
+        .supplier-tag.required {
+            background: rgba(255, 107, 53, 0.15);
+            color: var(--neon-orange);
+            border: 1px solid rgba(255, 107, 53, 0.3);
+        }
+        
+        .cost-tag {
+            font-family: 'Space Mono', monospace;
+            font-size: 1rem;
+            color: var(--neon-cyan);
         }
         
         /* Cost Section */
         .cost-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
             gap: 25px;
-            margin-top: 40px;
         }
         
         .cost-card {
-            background: var(--secondary);
-            border: 1px solid var(--border);
-            border-radius: 15px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
             padding: 30px;
             text-align: center;
             transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .cost-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 2px;
+            background: var(--neon-green);
+            transition: width 0.3s;
         }
         
         .cost-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--accent);
+            transform: translateY(-8px);
+            border-color: var(--neon-green);
+        }
+        
+        .cost-card:hover::after {
+            width: 100%;
         }
         
         .cost-card.highlight {
-            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(16, 185, 129, 0.05) 100%);
-            border-color: var(--accent);
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.1) 0%, rgba(0, 212, 255, 0.05) 100%);
+            border-color: var(--neon-green);
         }
         
         .cost-card h3 {
-            font-size: 1rem;
+            font-size: 0.9rem;
             color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
             margin-bottom: 15px;
-            font-weight: 500;
         }
         
         .cost-card .amount {
-            font-size: 2rem;
+            font-size: 2.2rem;
             font-weight: 700;
-            color: var(--accent);
+            background: linear-gradient(135deg, var(--neon-green), var(--neon-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
         
-        /* Suppliers Section */
-        .suppliers-grid {
+        /* Oklahoma Section */
+        .oklahoma-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 25px;
         }
         
+        .ok-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 30px;
+            transition: all 0.3s ease;
+        }
+        
+        .ok-card:hover {
+            border-color: var(--neon-cyan);
+        }
+        
+        .ok-card .icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        
+        .ok-card .icon svg {
+            width: 25px;
+            height: 25px;
+            stroke: var(--bg-dark);
+        }
+        
+        .ok-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 12px;
+        }
+        
+        .ok-card p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        
+        /* Suppliers */
+        .suppliers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+        
         .supplier-card {
-            background: var(--secondary);
-            border: 1px solid var(--border);
-            border-radius: 15px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
             padding: 30px;
             transition: all 0.3s ease;
         }
         
         .supplier-card:hover {
-            border-color: var(--accent);
-            transform: translateY(-3px);
+            border-color: var(--neon-purple);
+            transform: translateY(-5px);
         }
         
         .supplier-card .origin {
@@ -303,33 +494,37 @@
         }
         
         .supplier-card p {
-            color: var(--text-muted);
+            color: var(--text-secondary);
             font-size: 0.9rem;
         }
         
         /* Success Factors */
-        .factors-list {
+        .factors-grid {
             display: grid;
             gap: 20px;
-            max-width: 800px;
-            margin: 0 auto;
         }
         
-        .factor-item {
+        .factor-card {
             display: flex;
             align-items: flex-start;
-            gap: 20px;
-            background: var(--secondary);
-            padding: 25px;
-            border-radius: 12px;
-            border: 1px solid var(--border);
+            gap: 25px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 30px;
+            transition: all 0.3s ease;
+        }
+        
+        .factor-card:hover {
+            border-color: var(--neon-green);
         }
         
         .factor-icon {
-            width: 50px;
-            height: 50px;
-            background: rgba(16, 185, 129, 0.1);
-            border-radius: 12px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.2), rgba(0, 212, 255, 0.1));
+            border: 1px solid rgba(0, 255, 136, 0.3);
+            border-radius: 14px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -337,256 +532,517 @@
         }
         
         .factor-icon svg {
-            width: 25px;
-            height: 25px;
-            stroke: var(--accent);
+            width: 28px;
+            height: 28px;
+            stroke: var(--neon-green);
         }
         
         .factor-content h3 {
-            font-size: 1.1rem;
-            margin-bottom: 5px;
+            font-size: 1.2rem;
+            margin-bottom: 8px;
         }
         
         .factor-content p {
-            color: var(--text-muted);
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+        
+        /* Warning Banner */
+        .warning-banner {
+            background: linear-gradient(135deg, rgba(255, 107, 53, 0.1), rgba(255, 51, 102, 0.1));
+            border: 1px solid rgba(255, 107, 53, 0.3);
+            border-radius: 16px;
+            padding: 25px 30px;
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        
+        .warning-banner .icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 107, 53, 0.2);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        
+        .warning-banner svg {
+            width: 22px;
+            height: 22px;
+            stroke: var(--neon-orange);
+        }
+        
+        .warning-banner h4 {
+            color: var(--neon-orange);
+            margin-bottom: 5px;
+        }
+        
+        .warning-banner p {
+            color: var(--text-secondary);
             font-size: 0.9rem;
         }
         
-        /* CTA Section */
-        .cta {
+        /* CTA */
+        .cta-section {
             text-align: center;
             padding: 100px 20px;
-            background: linear-gradient(135deg, var(--secondary) 0%, var(--primary) 100%);
+            background: linear-gradient(180deg, transparent, rgba(0, 255, 136, 0.03));
         }
         
-        .cta h2 {
-            font-size: 2rem;
+        .cta-section h2 {
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
             margin-bottom: 20px;
         }
         
-        .cta p {
-            color: var(--text-muted);
-            margin-bottom: 30px;
+        .cta-section p {
+            color: var(--text-secondary);
             max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
+            margin: 0 auto 40px;
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 16px 32px;
+            background: linear-gradient(135deg, var(--neon-green), var(--neon-cyan));
+            color: var(--bg-dark);
+            font-weight: 700;
+            font-size: 1rem;
+            border-radius: 12px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0, 255, 136, 0.3);
+        }
+        
+        /* Scroll Indicator */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            animation: float 2s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(10px); }
+        }
+        
+        .scroll-indicator svg {
+            width: 24px;
+            height: 24px;
+            stroke: var(--neon-green);
         }
         
         /* Responsive */
         @media (max-width: 768px) {
-            .equipment-row {
+            .process-step {
                 grid-template-columns: 1fr;
                 text-align: center;
             }
             
-            .equipment-row .stage-num {
+            .step-number {
                 margin: 0 auto;
             }
             
-            .metrics {
-                gap: 20px;
+            .step-meta {
+                text-align: center;
             }
             
-            .metric {
-                padding: 15px 20px;
+            .factor-card {
+                flex-direction: column;
+                text-align: center;
             }
-        }
-        
-        /* Animations */
-        .fade-in {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.6s ease;
-        }
-        
-        .fade-in.visible {
-            opacity: 1;
-            transform: translateY(0);
+            
+            .factor-icon {
+                margin: 0 auto;
+            }
         }
     </style>
 </head>
 <body>
+    <div class="bg-animation"></div>
+    <div class="grid-overlay"></div>
+    
     <!-- Hero Section -->
     <section class="hero">
-        <div class="hero-content">
-            <h1>USA Battery Recycling Plant</h1>
-            <p class="subtitle">Equipment Recommendation Report<br>Hybrid Approach: Chinese Equipment + Western Safety Systems</p>
-            
-            <div class="metrics">
-                <div class="metric">
-                    <span class="metric-value">$300K-500K</span>
-                    <span class="metric-label">Total CAPEX</span>
-                </div>
-                <div class="metric">
-                    <span class="metric-value">1-2 t/h</span>
-                    <span class="metric-label">Capacity</span>
-                </div>
-                <div class="metric">
-                    <span class="metric-value">24-30 mo</span>
-                    <span class="metric-label">Payback</span>
-                </div>
+        <div class="hero-badge">Oklahoma DEQ Compliant</div>
+        <h1>USA Battery Recycling<br>Equipment Guide</h1>
+        <p class="subtitle">Hybrid Approach: Chinese Equipment + Western Safety Systems<br>Complete 14-Step Process with Discharge, PACK Decomposition & Waste Gas Treatment</p>
+        
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <div class="value">$370K-600K</div>
+                <div class="label">Total CAPEX</div>
+            </div>
+            <div class="metric-card">
+                <div class="value">1-2 t/h</div>
+                <div class="label">Capacity</div>
+            </div>
+            <div class="metric-card">
+                <div class="value">24-30 mo</div>
+                <div class="label">Payback Period</div>
+            </div>
+            <div class="metric-card">
+                <div class="value">95%+</div>
+                <div class="label">Recovery Rate</div>
             </div>
         </div>
         
         <div class="scroll-indicator">
+            <span>Scroll to explore</span>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M7 13l5 5 5-5M7 6l5 5 5-5"/>
+                <path d="M12 5v14M19 12l-7 7-7-7"/>
             </svg>
         </div>
     </section>
     
-    <!-- Equipment Stack -->
-    <section id="equipment">
-        <h2 class="section-title">Recommended Equipment Stack</h2>
+    <!-- Complete Process Flow -->
+    <section id="process">
+        <div class="section-header">
+            <span class="section-number">// Complete Process Flow</span>
+            <h2 class="section-title">14-Step Recycling Process</h2>
+            <p class="section-subtitle">From battery receipt to black mass production with discharge, PACK decomposition, and waste gas treatment</p>
+        </div>
         
-        <div class="equipment-grid">
-            <div class="equipment-row header">
-                <span>Stage</span>
-                <span>Equipment</span>
-                <span>Supplier</span>
-                <span>Cost</span>
+        <!-- Warning Banner -->
+        <div class="warning-banner">
+            <div class="icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+                </svg>
+            </div>
+            <div>
+                <h4>Critical Additions Based on Research</h4>
+                <p>This enhanced process includes battery discharge (Step 2), PACK decomposition (Step 3), and organic waste gas treatment (Step 11) - essential for safe, Oklahoma-compliant operations. Without discharge, batteries can cause fires during shredding. Without waste gas treatment, the facility won't meet Oklahoma DEQ permits.</p>
+            </div>
+        </div>
+        
+        <div class="process-flow">
+            <!-- Step 1 -->
+            <div class="process-step">
+                <div class="step-number">01</div>
+                <div class="step-content">
+                    <h3>Battery Collection & Receiving</h3>
+                    <p>EV batteries, laptop batteries, power tools received and logged. All chemistries accepted: NMC, LFP, NCA, LCO. Stored in fire-resistant containers with proper spacing.</p>
+                </div>
+                <div class="step-meta">
+                    <span class="supplier-tag required">Required</span>
+                </div>
             </div>
             
-            <div class="equipment-row fade-in">
-                <span class="stage-num">1</span>
-                <span>Primary Shredder (Double-shaft, N₂-ready)</span>
-                <span><span class="supplier-tag china">Genox / Xingmao</span></span>
-                <span>$25K-45K</span>
+            <!-- Step 2 - NEW: Discharge -->
+            <div class="process-step">
+                <div class="step-number">02</div>
+                <div class="step-content">
+                    <h3>🔋 Battery Discharge Station</h3>
+                    <p><strong>CRITICAL SAFETY STEP.</strong> Batteries discharged to &lt;1V/cell using resistive load banks. Prevents thermal runaway and fires during shredding. 4-24 hours depending on size. OSHA requires proper discharge before processing.</p>
+                </div>
+                <div class="step-meta">
+                    <span class="supplier-tag required">NEW - REQUIRED</span>
+                    <div class="cost-tag">$15K-30K</div>
+                </div>
             </div>
             
-            <div class="equipment-row fade-in">
-                <span class="stage-num">2</span>
-                <span>Hammer Mill (1500 rpm optimal)</span>
-                <span><span class="supplier-tag china">Xingmao / Henan Doing</span></span>
-                <span>$15K-25K</span>
+            <!-- Step 3 - NEW: PACK Decomposition -->
+            <div class="process-step">
+                <div class="step-number">03</div>
+                <div class="step-content">
+                    <h3>🔧 PACK Decomposition</h3>
+                    <p><strong>NEW STEP.</strong> EV battery packs disassembled to module/cell level. Remove steel casings, thermal management systems, BMS wiring. Manual sorting by chemistry type (NMC vs LFP).</p>
+                </div>
+                <div class="step-meta">
+                    <span class="supplier-tag required">NEW - REQUIRED</span>
+                    <div class="cost-tag">$10K-20K</div>
+                </div>
             </div>
             
-            <div class="equipment-row fade-in">
-                <span class="stage-num">3</span>
-                <span>Screening (Multi-deck, 2/5/20mm)</span>
-                <span><span class="supplier-tag china">Xingmao</span></span>
-                <span>$8K-15K</span>
+            <!-- Step 4 -->
+            <div class="process-step">
+                <div class="step-number">04</div>
+                <div class="step-content">
+                    <h3>Primary Shredder</h3>
+                    <p>Double-shaft shear shredder under nitrogen atmosphere. Breaks open battery cells, releases electrode materials. Output: 50-100mm fragments. Gas-tight design required.</p>
+                </div>
+                <div class="step-meta">
+                    <span class="supplier-tag china">Genox / Xingmao</span>
+                    <div class="cost-tag">$25K-45K</div>
+                </div>
             </div>
             
-            <div class="equipment-row fade-in">
-                <span class="stage-num">4</span>
-                <span>Magnetic Separator (Rare Earth Drum)</span>
-                <span><span class="supplier-tag western">Eriez USA</span></span>
-                <span>$10K-20K</span>
+            <!-- Step 5 -->
+            <div class="process-step">
+                <div class="step-number">05</div>
+                <div class="step-content">
+                    <h3>Secondary Crusher / Hammer Mill</h3>
+                    <p>High-speed impact crusher at 1500 rpm (optimal per MDPI research). Liberates electrode materials from current collectors. Output: &lt;20mm particles. Reduces binder adhesion.</p>
+                </div>
+                <div class="step-meta">
+                    <span class="supplier-tag china">Xingmao / Henan Doing</span>
+                    <div class="cost-tag">$15K-25K</div>
+                </div>
             </div>
             
-            <div class="equipment-row fade-in">
-                <span class="stage-num">5</span>
-                <span>Eddy Current Separator</span>
-                <span><span class="supplier-tag western">Eriez USA</span></span>
-                <span>$20K-35K</span>
+            <!-- Step 6 -->
+            <div class="process-step">
+                <div class="step-number">06</div>
+                <div class="step-content">
+                    <h3>Vibrating Screen Separation</h3>
+                    <p>Multi-deck screens (2mm, 5mm, 20mm) classify materials by size. Fine black mass powder passes through; larger fragments recirculate for further milling. Critical for purity.</p>
+                </div>
+                <div class="step-meta">
+                    <span class="supplier-tag china">Xingmao</span>
+                    <div class="cost-tag">$8K-15K</div>
+                </div>
             </div>
             
-            <div class="equipment-row fade-in">
-                <span class="stage-num">6</span>
-                <span>Air Classifier (Density Separation)</span>
-                <span><span class="supplier-tag china">Xingmao</span></span>
-                <span>$10K-20K</span>
+            <!-- Step 7 -->
+            <div class="process-step">
+                <div class="step-number">07</div>
+                <div class="step-content">
+                    <h3>Magnetic Separation</h3>
+                    <p>Rare earth drum magnet extracts ferrous materials (steel casings, iron contaminants). Protects downstream equipment and improves black mass purity. Eriez standard.</p>
+                </div>
+                <div class="step-meta">
+                    <span class="supplier-tag western">Eriez USA</span>
+                    <div class="cost-tag">$10K-20K</div>
+                </div>
             </div>
             
-            <div class="equipment-row fade-in">
-                <span class="stage-num">7</span>
-                <span>Dust Collection (HEPA)</span>
-                <span><span class="supplier-tag china">Xingmao + Western Filters</span></span>
-                <span>$10K-18K</span>
+            <!-- Step 8 -->
+            <div class="process-step">
+                <div class="step-number">08</div>
+                <div class="step-content">
+                    <h3>Eddy Current Separation</h3>
+                    <p>Non-ferrous metal separator recovers aluminum and copper from current collectors. Higher recovery rates justify premium Western equipment. 95%+ recovery achievable.</p>
+                </div>
+                <div class="step-meta">
+                    <span class="supplier-tag western">Eriez USA</span>
+                    <div class="cost-tag">$20K-35K</div>
+                </div>
             </div>
             
-            <div class="equipment-row fade-in">
-                <span class="stage-num">8</span>
-                <span>Nitrogen System (Membrane + O₂ Monitoring)</span>
-                <span><span class="supplier-tag safety">Generon USA</span></span>
-                <span>$30K-50K</span>
+            <!-- Step 9 -->
+            <div class="process-step">
+                <div class="step-number">09</div>
+                <div class="step-content">
+                    <h3>Air Classification</h3>
+                    <p>Density separation separates black mass from lighter plastic and separator fragments. Critical for achieving clean black mass output. Air knife or zig-zag separators.</p>
+                </div>
+                <div class="step-meta">
+                    <span class="supplier-tag china">Xingmao</span>
+                    <div class="cost-tag">$10K-20K</div>
+                </div>
             </div>
             
-            <div class="equipment-row fade-in">
-                <span class="stage-num">9</span>
-                <span>Fire Suppression (Water Mist + CO₂)</span>
-                <span><span class="supplier-tag safety">Siemens USA</span></span>
-                <span>$25K-40K</span>
+            <!-- Step 10 -->
+            <div class="process-step">
+                <div class="step-number">10</div>
+                <div class="step-content">
+                    <h3>Drying System</h3>
+                    <p>Remove moisture accumulated during processing. Rotary dryer or oven at 80-120°C. Electrolyte evaporates during this step - requires waste gas treatment downstream.</p>
+                </div>
+                <div class="step-meta">
+                    <span class="supplier-tag china">Xingmao</span>
+                    <div class="cost-tag">$12K-25K</div>
+                </div>
             </div>
             
-            <div class="equipment-row fade-in">
-                <span class="stage-num">10</span>
-                <span>Gas Detection (HF, HCN, CO)</span>
-                <span><span class="supplier-tag safety">Drager / Honeywell</span></span>
-                <span>$15K-30K</span>
+            <!-- Step 11 - NEW: Waste Gas Treatment -->
+            <div class="process-step">
+                <div class="step-number">11</div>
+                <div class="step-content">
+                    <h3>🌿 Organic Waste Gas Treatment</h3>
+                    <p><strong>OKLAHOMA DEQ COMPLIANCE REQUIRED.</strong> Electrolyte (organic solvents - DMC, EMC, DEC) evaporates during drying. Requires acid gas scrubbers, activated carbon filters, HEPA final filtration. Essential for DEQ air quality permits.</p>
+                </div>
+                <div class="step-meta">
+                    <span class="supplier-tag required">NEW - REQUIRED</span>
+                    <div class="cost-tag">$25K-50K</div>
+                </div>
+            </div>
+            
+            <!-- Step 12 -->
+            <div class="process-step">
+                <div class="step-number">12</div>
+                <div class="step-content">
+                    <h3>Black Mass Collection</h3>
+                    <p>Fine powder collected from dust systems and cyclones. Quality sampling for Li, Co, Ni, Mn content verification. Sealed containers for transport to hydrometallurgical processors.</p>
+                </div>
+                <div class="step-meta">
+                    <span class="supplier-tag china">Xingmao + Western Filters</span>
+                    <div class="cost-tag">$10K-18K</div>
+                </div>
+            </div>
+            
+            <!-- Step 13 - Safety -->
+            <div class="process-step">
+                <div class="step-number">13</div>
+                <div class="step-content">
+                    <h3>🔥 Nitrogen Inertization System</h3>
+                    <p><strong>SAFETY CRITICAL.</strong> Membrane nitrogen generator maintains O2 &lt;5% in shredding area. Prevents fires and thermal runaway. Continuous O2 monitoring required. Generon industry standard.</p>
+                </div>
+                <div class="step-meta">
+                    <span class="supplier-tag safety">Generon USA</span>
+                    <div class="cost-tag">$30K-50K</div>
+                </div>
+            </div>
+            
+            <!-- Step 14 -->
+            <div class="process-step">
+                <div class="step-number">14</div>
+                <div class="step-content">
+                    <h3>🚨 Fire Suppression & Gas Detection</h3>
+                    <p><strong>SAFETY CRITICAL.</strong> Water mist + CO2 fire suppression. HF, HCN, CO gas detection with ATEX-rated sensors. Insurance requirement. Drager/Honeywell for detection, Siemens for suppression.</p>
+                </div>
+                <div class="step-meta">
+                    <span class="supplier-tag safety">Drager / Siemens USA</span>
+                    <div class="cost-tag">$40K-70K</div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Oklahoma Compliance -->
+    <section id="oklahoma">
+        <div class="section-header">
+            <span class="section-number">// Oklahoma Regulations</span>
+            <h2 class="section-title">Oklahoma DEQ Compliance</h2>
+            <p class="section-subtitle">Green Li-ion opened facility in Atoka, Oklahoma (2024). Key regulatory requirements for battery recycling in Oklahoma.</p>
+        </div>
+        
+        <div class="oklahoma-grid">
+            <div class="ok-card">
+                <div class="icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                    </svg>
+                </div>
+                <h3>DEQ Permits Required</h3>
+                <p>Oklahoma DEQ requires air quality permits for emissions. Battery recycling facilities qualify for "synthetic minor" permits if emissions stay below major source thresholds (100 tons/year).</p>
+            </div>
+            
+            <div class="ok-card">
+                <div class="icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+                    </svg>
+                </div>
+                <h3>HB1907 - B2B Battery Regulations</h3>
+                <p>Oklahoma HB1907 establishes regulations for business-to-business batteries. Improper disposal subject to hazardous waste penalties. Producer responsibility requirements.</p>
+            </div>
+            
+            <div class="ok-card">
+                <div class="icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/>
+                    </svg>
+                </div>
+                <h3>EPA Hazardous Waste (D001/D003)</h3>
+                <p>Lithium-ion batteries classified as ignitable (D001) and reactive (D003) hazardous waste under EPA RCRA. Must comply with federal hazardous waste regulations. Proper handling required.</p>
+            </div>
+            
+            <div class="ok-card">
+                <div class="icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                    </svg>
+                </div>
+                <h3>Critical Minerals Hub</h3>
+                <p>Oklahoma offers expedited permitting for battery recycling in "Critical Minerals Hub" zones. Atoka facility operates in Heavy Industrial Park with Tier 1 EPA permits (lowest level).</p>
             </div>
         </div>
     </section>
     
     <!-- Cost Breakdown -->
     <section id="costs">
-        <h2 class="section-title">Cost Breakdown</h2>
+        <div class="section-header">
+            <span class="section-number">// Investment</span>
+            <h2 class="section-title">Cost Breakdown</h2>
+            <p class="section-subtitle">Complete 14-step process with all required equipment including discharge, PACK decomposition, and waste gas treatment</p>
+        </div>
         
         <div class="cost-grid">
-            <div class="cost-card fade-in">
-                <h3>Chinese Equipment</h3>
-                <span class="amount">$100K-180K</span>
+            <div class="cost-card">
+                <h3>Chinese Equipment (1-12)</h3>
+                <div class="amount">$140K-250K</div>
             </div>
             
-            <div class="cost-card fade-in">
+            <div class="cost-card">
                 <h3>Western Safety + Separation</h3>
-                <span class="amount">$80K-135K</span>
+                <div class="amount">$100K-175K</div>
             </div>
             
-            <div class="cost-card fade-in">
-                <h3>Equipment Total</h3>
-                <span class="amount">$180K-315K</span>
+            <div class="cost-card">
+                <h3>Discharge + PACK + Gas Treatment</h3>
+                <div class="amount">$50K-100K</div>
             </div>
             
-            <div class="cost-card fade-in">
+            <div class="cost-card">
                 <h3>Installation & Commissioning</h3>
-                <span class="amount">$80K-150K</span>
+                <div class="amount">$80K-150K</div>
             </div>
             
-            <div class="cost-card highlight fade-in">
-                <h3>Project Total</h3>
-                <span class="amount">$300K-500K</span>
+            <div class="cost-card highlight">
+                <h3>Total Project</h3>
+                <div class="amount">$370K-600K</div>
             </div>
         </div>
     </section>
     
     <!-- Suppliers -->
     <section id="suppliers">
-        <h2 class="section-title">Key Suppliers</h2>
+        <div class="section-header">
+            <span class="section-number">// Equipment Sources</span>
+            <h2 class="section-title">Key Suppliers</h2>
+        </div>
         
         <div class="suppliers-grid">
-            <div class="supplier-card fade-in">
+            <div class="supplier-card">
                 <p class="origin">China</p>
                 <h3>Genox</h3>
-                <p>Complete recycling lines, shredders. Has US office (Genox USA). Partnerships with Sicon GmbH.</p>
+                <p>Complete recycling lines, shredders. Has US office. Partnerships with Sicon GmbH.</p>
             </div>
             
-            <div class="supplier-card fade-in">
+            <div class="supplier-card">
                 <p class="origin">China</p>
                 <h3>Xingmao</h3>
-                <p>Complete lines. Verified 1.5 t/h USA install, 2 t/h South Korea install. Strong international track record.</p>
+                <p>Verified 1.5 t/h USA install, 2 t/h Korea. Strong international track record.</p>
             </div>
             
-            <div class="supplier-card fade-in">
+            <div class="supplier-card">
                 <p class="origin">USA</p>
                 <h3>Eriez</h3>
                 <p>Magnetic & eddy current separators. Industry standard, highest recovery rates.</p>
             </div>
             
-            <div class="supplier-card fade-in">
+            <div class="supplier-card">
                 <p class="origin">USA</p>
                 <h3>Generon</h3>
                 <p>Nitrogen membrane generators. Industry standard for inert atmosphere.</p>
             </div>
             
-            <div class="supplier-card fade-in">
+            <div class="supplier-card">
                 <p class="origin">USA / Germany</p>
                 <h3>Drager</h3>
-                <p>Gas detection systems (HF, HCN, CO). ATEX certified, regulatory acceptance.</p>
+                <p>Gas detection (HF, HCN, CO). ATEX certified, regulatory acceptance.</p>
             </div>
             
-            <div class="supplier-card fade-in">
+            <div class="supplier-card">
                 <p class="origin">USA</p>
                 <h3>Siemens</h3>
                 <p>Fire suppression systems. Industry standard, insurance approved.</p>
@@ -596,22 +1052,25 @@
     
     <!-- Success Factors -->
     <section id="factors">
-        <h2 class="section-title">Critical Success Factors</h2>
+        <div class="section-header">
+            <span class="section-number">// Critical Success</span>
+            <h2 class="section-title">Success Factors</h2>
+        </div>
         
-        <div class="factors-list">
-            <div class="factor-item fade-in">
+        <div class="factors-grid">
+            <div class="factor-card">
                 <div class="factor-icon">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                        <path d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
                     </svg>
                 </div>
                 <div class="factor-content">
                     <h3>Feedstock First</h3>
-                    <p>Secure 2-3 year battery supply agreements with collectors, electronics recyclers, or automotive OEMs before purchasing equipment.</p>
+                    <p>Secure 2-3 year battery supply agreements before purchasing equipment. Battery availability is the #1 success factor.</p>
                 </div>
             </div>
             
-            <div class="factor-item fade-in">
+            <div class="factor-card">
                 <div class="factor-icon">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
@@ -619,23 +1078,23 @@
                 </div>
                 <div class="factor-content">
                     <h3>Offtake Contracts</h3>
-                    <p>Identify 2-3 black mass buyers (Li-Cycle, Redwood Materials, Umicore, Glencore) and negotiate pricing tied to metal prices.</p>
+                    <p>Identify black mass buyers (Li-Cycle, Redwood Materials, Glencore). Negotiate pricing tied to metal prices.</p>
                 </div>
             </div>
             
-            <div class="factor-item fade-in">
+            <div class="factor-card">
                 <div class="factor-icon">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
                     </svg>
                 </div>
                 <div class="factor-content">
-                    <h3>Safety Budget - Non-Negotiable</h3>
-                    <p>Do not reduce Western safety system allocation. One incident can destroy your business. Insurance requires proper systems.</p>
+                    <h3>Oklahoma DEQ Permits</h3>
+                    <p>Budget for environmental permitting. Work with DEQ early. Green Li-ion example shows synthetic minor permits achievable.</p>
                 </div>
             </div>
             
-            <div class="factor-item fade-in">
+            <div class="factor-card">
                 <div class="factor-icon">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
@@ -643,50 +1102,23 @@
                     </svg>
                 </div>
                 <div class="factor-content">
-                    <h3>Installation Planning</h3>
-                    <p>Budget 25-35% above equipment cost for installation, integration, and commissioning. Chinese equipment requires more planning.</p>
-                </div>
-            </div>
-            
-            <div class="factor-item fade-in">
-                <div class="factor-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4"/>
-                    </svg>
-                </div>
-                <div class="factor-content">
-                    <h3>Spare Parts Inventory</h3>
-                    <p>Order 6-month spare parts inventory with equipment delivery. Lead times from China are 4-8 weeks. Minimize downtime risk.</p>
+                    <h3>Safety Budget - Non-Negotiable</h3>
+                    <p>Never reduce Western safety allocation. One incident can destroy your business. Insurance requires proper systems.</p>
                 </div>
             </div>
         </div>
     </section>
     
     <!-- CTA -->
-    <section class="cta">
+    <section class="cta-section">
         <h2>Ready to Build Your Plant?</h2>
-        <p>Contact the recommended suppliers above to request quotes. Start with feedstock agreements and offtake contracts before equipment purchases.</p>
+        <p>Contact suppliers for quotes. Start with feedstock agreements and offtake contracts. Ensure Oklahoma DEQ compliance from day one.</p>
+        <a href="#process" class="btn">
+            View Complete Process
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+        </a>
     </section>
-    
-    <script>
-        // Scroll Animation
-        const observerOptions = {
-            root: null,
-            rootMargin: '0px',
-            threshold: 0.1
-        };
-        
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, observerOptions);
-        
-        document.querySelectorAll('.fade-in').forEach(el => {
-            observer.observe(el);
-        });
-    </script>
 </body>
 </html>

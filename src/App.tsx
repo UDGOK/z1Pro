@@ -17,6 +17,7 @@ interface ProcessStepDetail {
 function App() {
   const [activeSection, setActiveSection] = useState('hero')
   const [selectedStep, setSelectedStep] = useState<number | null>(null)
+  const [selectedPdf, setSelectedPdf] = useState<string | null>(null)
 
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id)
@@ -36,6 +37,16 @@ function App() {
     document.body.style.overflow = 'auto'
   }
 
+  const openPdf = (pdfPath: string) => {
+    setSelectedPdf(pdfPath)
+    document.body.style.overflow = 'hidden'
+  }
+
+  const closePdf = () => {
+    setSelectedPdf(null)
+    document.body.style.overflow = 'auto'
+  }
+
   return (
     <div className="app">
       <div className="bg-animation"></div>
@@ -51,6 +62,7 @@ function App() {
             <a href="#oklahoma" onClick={(e) => { e.preventDefault(); scrollToSection('oklahoma') }}>Oklahoma</a>
             <a href="#economics" onClick={(e) => { e.preventDefault(); scrollToSection('economics') }}>Economics</a>
             <a href="#questions" onClick={(e) => { e.preventDefault(); scrollToSection('questions') }}>Questions</a>
+            <a href="#drawings" onClick={(e) => { e.preventDefault(); scrollToSection('drawings') }}>Drawings</a>
             <a href="#team" onClick={(e) => { e.preventDefault(); scrollToSection('team') }}>Team</a>
           </div>
         </div>
@@ -263,6 +275,113 @@ function App() {
         </div>
       </section>
 
+      {/* Drawings Section */}
+      <section id="drawings">
+        <div className="section-header">
+          <span className="section-number">// Facility Drawings</span>
+          <h2 className="section-title">Architectural & Engineering Plans</h2>
+          <p className="section-subtitle">Official construction documents, permits, and technical drawings</p>
+        </div>
+
+        <div className="drawings-container">
+          <div className="drawings-sidebar">
+            <div className="drawings-filters">
+              <h3>Drawing Categories</h3>
+              <div className="filter-group">
+                <button className="filter-btn active">All Drawings</button>
+                <button className="filter-btn">Architectural</button>
+                <button className="filter-btn">Structural</button>
+                <button className="filter-btn">Mechanical</button>
+                <button className="filter-btn">Electrical</button>
+                <button className="filter-btn">Civil</button>
+              </div>
+            </div>
+            
+            <div className="drawings-info">
+              <div className="info-card">
+                <h4>Project Details</h4>
+                <div className="info-row">
+                  <span className="label">Project:</span>
+                  <span className="value">Z1 Process Facility</span>
+                </div>
+                <div className="info-row">
+                  <span className="label">Location:</span>
+                  <span className="value">Oklahoma</span>
+                </div>
+                <div className="info-row">
+                  <span className="label">Status:</span>
+                  <span className="value status-wip">WIP - In Progress</span>
+                </div>
+                <div className="info-row">
+                  <span className="label">Sheets:</span>
+                  <span className="value">{drawings.length} Drawings</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="drawings-main">
+            <div className="drawings-header-row">
+              <h3>Drawing Register</h3>
+              <span className="drawing-count">{drawings.length} documents</span>
+            </div>
+            
+            <div className="drawings-table">
+              <div className="table-header">
+                <div className="col-sheet">Sheet No.</div>
+                <div className="col-title">Drawing Title</div>
+                <div className="col-discipline">Discipline</div>
+                <div className="col-date">Date</div>
+                <div className="col-action">View</div>
+              </div>
+              {drawings.map((drawing, index) => (
+                <div 
+                  key={index} 
+                  className={`table-row ${drawing.status === 'Current' ? 'current' : 'revision'}`}
+                  onClick={() => openPdf(drawing.file)}
+                >
+                  <div className="col-sheet">
+                    <span className="sheet-number">{drawing.sheetNumber}</span>
+                  </div>
+                  <div className="col-title">
+                    <span className="drawing-name">{drawing.title}</span>
+                    <span className="drawing-desc">{drawing.description}</span>
+                  </div>
+                  <div className="col-discipline">
+                    <span className={`discipline-tag ${drawing.discipline.toLowerCase()}`}>
+                      {drawing.discipline}
+                    </span>
+                  </div>
+                  <div className="col-date">
+                    <span className="date">{drawing.date}</span>
+                  </div>
+                  <div className="col-action">
+                    <button className="view-btn">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                        <path d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                      </svg>
+                      View
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <div className="drawings-legend">
+          <div className="legend-item">
+            <span className="legend-dot current"></span>
+            <span>Current Released Drawing</span>
+          </div>
+          <div className="legend-item">
+            <span className="legend-dot revision"></span>
+            <span>Revision/Work in Progress</span>
+          </div>
+        </div>
+      </section>
+
       {/* Team Section */}
       <section id="team">
         <div className="team-hero">
@@ -362,6 +481,49 @@ function App() {
                   ))}
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* PDF Viewer Modal */}
+      {selectedPdf && (
+        <div className="pdf-viewer-overlay" onClick={closePdf}>
+          <div className="pdf-viewer-modal" onClick={(e) => e.stopPropagation()}>
+            <div className="pdf-viewer-header">
+              <div className="pdf-title">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                </svg>
+                <span>Facility Drawing</span>
+              </div>
+              <button className="pdf-close-btn" onClick={closePdf}>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M6 18L18 6M6 6l12 12"/>
+                </svg>
+              </button>
+            </div>
+            <div className="pdf-viewer-body">
+              <iframe 
+                src={selectedPdf} 
+                title="Drawing Viewer"
+                className="pdf-iframe"
+              />
+            </div>
+            <div className="pdf-viewer-footer">
+              <span className="pdf-instructions">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <circle cx="12" cy="12" r="10"/>
+                  <path d="M12 16v-4M12 8h.01"/>
+                </svg>
+                Use controls in PDF viewer to zoom, pan, and navigate pages
+              </span>
+              <a href={selectedPdf} download className="pdf-download-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/>
+                </svg>
+                Download PDF
+              </a>
             </div>
           </div>
         </div>
@@ -761,5 +923,34 @@ const teamMembers = [
 ]
 
 const extendedTeamCount = 25
+
+const drawings = [
+  { sheetNumber: "G-001", title: "General Notes & Legend", description: "Project general notes, abbreviations, and drawing legend", discipline: "Architectural", date: "2024-01-15", status: "Current", file: "/facility-drawings.pdf" },
+  { sheetNumber: "G-002", title: "General Notes - ADA Compliance", description: "ADA accessibility requirements and details", discipline: "Architectural", date: "2024-01-15", status: "Current", file: "/facility-drawings.pdf" },
+  { sheetNumber: "A-001", title: "Floor Plan - Overview", description: "Overall building floor plan layout", discipline: "Architectural", date: "2024-02-01", status: "Current", file: "/facility-drawings.pdf" },
+  { sheetNumber: "A-002", title: "Floor Plan - Processing Area", description: "Detailed processing area layout with equipment locations", discipline: "Architectural", date: "2024-02-10", status: "Current", file: "/facility-drawings.pdf" },
+  { sheetNumber: "A-003", title: "Floor Plan - Support Areas", description: "Office, warehouse, and support spaces", discipline: "Architectural", date: "2024-02-10", status: "Current", file: "/facility-drawings.pdf" },
+  { sheetNumber: "A-101", title: "Roof Plan", description: "Roof layout, drainage, and equipment locations", discipline: "Architectural", date: "2024-02-15", status: "Current", file: "/facility-drawings.pdf" },
+  { sheetNumber: "A-201", title: "Building Elevations", description: "North, south, east, west exterior elevations", discipline: "Architectural", date: "2024-02-20", status: "Current", file: "/facility-drawings.pdf" },
+  { sheetNumber: "A-301", title: "Building Sections", description: "Longitudinal and transverse building sections", discipline: "Architectural", date: "2024-02-25", status: "Current", file: "/facility-drawings.pdf" },
+  { sheetNumber: "A-401", title: "Wall Sections", description: "Typical wall assemblies and details", discipline: "Architectural", date: "2024-03-01", status: "Revision", file: "/facility-drawings.pdf" },
+  { sheetNumber: "S-001", title: "Structural General Notes", description: "Structural design criteria and general notes", discipline: "Structural", date: "2024-01-20", status: "Current", file: "/facility-drawings.pdf" },
+  { sheetNumber: "S-002", title: "Foundation Plan", description: "Building foundation layout and details", discipline: "Structural", date: "2024-02-05", status: "Current", file: "/facility-drawings.pdf" },
+  { sheetNumber: "S-101", title: "Structural Framing Plan", description: "Roof and floor framing layout", discipline: "Structural", date: "2024-02-15", status: "Current", file: "/facility-drawings.pdf" },
+  { sheetNumber: "S-201", title: "Structural Details", description: "Connection details and reinforcing specifications", discipline: "Structural", date: "2024-03-01", status: "Revision", file: "/facility-drawings.pdf" },
+  { sheetNumber: "M-001", title: "Mechanical General Notes", description: "HVAC and plumbing design criteria", discipline: "Mechanical", date: "2024-01-25", status: "Current", file: "/facility-drawings.pdf" },
+  { sheetNumber: "M-101", title: "HVAC Plan", description: "Heating, ventilation, and air conditioning layout", discipline: "Mechanical", date: "2024-02-20", status: "Current", file: "/facility-drawings.pdf" },
+  { sheetNumber: "M-201", title: "Plumbing Plan", description: "Water supply and drainage layout", discipline: "Mechanical", date: "2024-02-25", status: "Current", file: "/facility-drawings.pdf" },
+  { sheetNumber: "M-301", title: "Process Piping", description: "Industrial process piping and equipment connections", discipline: "Mechanical", date: "2024-03-05", status: "Revision", file: "/facility-drawings.pdf" },
+  { sheetNumber: "E-001", title: "Electrical General Notes", description: "Electrical design criteria and specifications", discipline: "Electrical", date: "2024-01-25", status: "Current", file: "/facility-drawings.pdf" },
+  { sheetNumber: "E-101", title: "Electrical Floor Plan", description: "Power distribution and lighting layout", discipline: "Electrical", date: "2024-02-20", status: "Current", file: "/facility-drawings.pdf" },
+  { sheetNumber: "E-201", title: "One-Line Diagram", description: "Electrical distribution single-line diagram", discipline: "Electrical", date: "2024-03-01", status: "Current", file: "/facility-drawings.pdf" },
+  { sheetNumber: "E-301", title: "Panel Schedules", description: "Electrical panel schedules and load calculations", discipline: "Electrical", date: "2024-03-05", status: "Revision", file: "/facility-drawings.pdf" },
+  { sheetNumber: "C-001", title: "Civil General Notes", description: "Site work design criteria", discipline: "Civil", date: "2024-01-10", status: "Current", file: "/facility-drawings.pdf" },
+  { sheetNumber: "C-101", title: "Site Plan", description: "Overall site layout and utilities", discipline: "Civil", date: "2024-01-20", status: "Current", file: "/facility-drawings.pdf" },
+  { sheetNumber: "C-201", title: "Grading Plan", description: "Site grading and drainage", discipline: "Civil", date: "2024-02-01", status: "Current", file: "/facility-drawings.pdf" },
+  { sheetNumber: "C-301", title: "Utility Plan", description: "Water, sewer, and storm utilities", discipline: "Civil", date: "2024-02-10", status: "Current", file: "/facility-drawings.pdf" },
+  { sheetNumber: "B/A001", title: "Dumpster Enclosure", description: "Trash enclosure details and specifications", discipline: "Civil", date: "2024-02-15", status: "Current", file: "/facility-drawings.pdf" },
+]
 
 export default App

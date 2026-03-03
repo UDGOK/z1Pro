@@ -1571,6 +1571,25 @@ section {
   color: var(--neon-cyan);
 }
 
+.filter-btn {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.filter-count {
+  background: var(--bg-elevated);
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 0.7rem;
+  color: var(--text-muted);
+}
+
+.filter-btn.active .filter-count {
+  background: rgba(0, 212, 255, 0.2);
+  color: var(--neon-cyan);
+}
+
 /* Info Card */
 .drawings-info {
   background: var(--bg-card);

@@ -50,8 +50,9 @@ function parseFilename(filename) {
   // Second part is title
   const title = parts[1] || 'Untitled';
   
-  // Third part (optional) is date
-  const date = parts[2] || new Date().toISOString().split('T')[0];
+  // Use current date (when build runs) since GitHub doesn't preserve upload dates
+  const now = new Date();
+  const date = `${String(now.getMonth() + 1).padStart(2, '0')}/${String(now.getDate()).padStart(2, '0')}/${now.getFullYear()}`;
   
   // Fourth part (optional) is status
   const status = parts[3] || 'Current';

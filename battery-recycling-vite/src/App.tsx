@@ -51,6 +51,7 @@ function App() {
             <a href="#oklahoma" onClick={(e) => { e.preventDefault(); scrollToSection('oklahoma') }}>Oklahoma</a>
             <a href="#economics" onClick={(e) => { e.preventDefault(); scrollToSection('economics') }}>Economics</a>
             <a href="#questions" onClick={(e) => { e.preventDefault(); scrollToSection('questions') }}>Questions</a>
+            <a href="#team" onClick={(e) => { e.preventDefault(); scrollToSection('team') }}>Team</a>
           </div>
         </div>
       </nav>
@@ -259,6 +260,37 @@ function App() {
             <li>Engage a metallurgical engineer or battery recycling consultant</li>
             <li>Develop feedstock supply agreements with 2-3 potential suppliers</li>
           </ol>
+        </div>
+      </section>
+
+      {/* Team Section */}
+      <section id="team">
+        <div className="section-header">
+          <span className="section-number">// Leadership Team</span>
+          <h2 className="section-title">Meet Our Team</h2>
+          <p className="section-subtitle">Industry experts driving sustainable battery recycling innovation</p>
+        </div>
+        
+        <div className="team-grid">
+          {teamMembers.map((member, index) => (
+            <div key={index} className="team-card">
+              <div className="team-avatar">
+                <div className="avatar-initials">{member.initials}</div>
+                <div className="avatar-glow"></div>
+              </div>
+              <h3>{member.name}</h3>
+              <p className="team-role">{member.role}</p>
+              <p className="team-email">{member.email}</p>
+              <div className="team-bio">{member.bio}</div>
+            </div>
+          ))}
+        </div>
+
+        <div className="team-cta">
+          <div className="team-cta-content">
+            <h3>And Our Extended Team</h3>
+            <p>We have a dedicated team of {extendedTeamCount}+ professionals including engineers, safety specialists, environmental compliance experts, and operations staff committed to advancing sustainable battery recycling in Oklahoma.</p>
+          </div>
         </div>
       </section>
 
@@ -697,5 +729,31 @@ const engineeringQuestions = [
     importance: "medium"
   }
 ]
+
+const teamMembers = [
+  {
+    name: "Syed Hussain",
+    role: "Chief Executive Officer",
+    email: "syed@shtllc.org",
+    initials: "SH",
+    bio: "Visionary leader driving sustainable battery recycling innovation. Strategic oversight of operations, partnerships, and growth initiatives."
+  },
+  {
+    name: "Javed Iqbal, Ph.D.",
+    role: "Chief Research Officer",
+    email: "javed@evbolt.com",
+    initials: "JI",
+    bio: "Leading battery technology researcher with deep expertise in recycling processes and emerging battery chemistries. Academic and industry experience."
+  },
+  {
+    name: "Muhammad Siddiki",
+    role: "Procurement & Vendor Relations",
+    email: "muhammad@z1power.com",
+    initials: "MS",
+    bio: "Strategic sourcing expert managing equipment procurement and supplier relationships. Building the supply chain for sustainable operations."
+  }
+]
+
+const extendedTeamCount = 25
 
 export default App

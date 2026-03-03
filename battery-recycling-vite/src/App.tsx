@@ -265,10 +265,16 @@ function App() {
 
       {/* Team Section */}
       <section id="team">
-        <div className="section-header">
-          <span className="section-number">// Leadership Team</span>
-          <h2 className="section-title">Meet Our Team</h2>
-          <p className="section-subtitle">Industry experts driving sustainable battery recycling innovation</p>
+        <div className="team-hero">
+          <div className="team-hero-image">
+            <img src="/team-neon.png" alt="Z1 Process Team" />
+            <div className="team-hero-overlay"></div>
+          </div>
+          <div className="team-hero-content">
+            <span className="section-number">// Leadership Team</span>
+            <h2 className="section-title">Meet Our Team</h2>
+            <p className="section-subtitle">Industry experts driving sustainable battery recycling innovation</p>
+          </div>
         </div>
         
         <div className="team-grid">

@@ -1,11 +1,12 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import './App.css'
 
 // ========================================
 // AUTO-DRAWING SYSTEM
 // Upload PDFs to /public/drawings/ folder
-// Filename format: [DIS]-[NUMBER]-[TITLE].pdf
-// Example: A-001-Floor-Plan.pdf, S-101-Foundation-Plan.pdf
+// Filename format: [PREFIX]-[NUMBER]_[TITLE]_[DATE]_[STATUS].pdf
+// Example: A-001_Floor-Plan_2024-03-01_Current.pdf
+// The manifest is auto-generated at build time by generate-manifest.mjs
 // ========================================
 
 interface Drawing {
@@ -20,112 +21,22 @@ interface Drawing {
 
 // Discipline mapping based on prefix
 const DISCIPLINE_MAP: Record<string, string> = {
-  'G': 'Architectural',
+  'G': 'General',
   'A': 'Architectural',
   'S': 'Structural',
   'M': 'Mechanical',
   'E': 'Electrical',
   'C': 'Civil',
-  'B': 'Civil',
+  'B': 'Building',
   'P': 'Plumbing',
   'F': 'Fire Protection',
   'T': 'Telecommunications',
 }
 
-// Default drawings folder - automatically generated from files
-// Add PDF files to /public/drawings/ and they'll appear automatically
-// Supported prefixes: G, A (Architectural), S (Structural), M (Mechanical), 
-// E (Electrical), C, B (Civil), P (Plumbing), F (Fire), T (Telecom)
-
-const AUTO_DRAWINGS: Drawing[] = [
-  // Architectural
-  { sheetNumber: "G-001", title: "General Notes & Legend", description: "Project general notes, abbreviations, and drawing legend", discipline: "Architectural", date: "2024-01-15", status: "Current", file: "/facility-drawings.pdf" },
-  { sheetNumber: "G-002", title: "General Notes - ADA Compliance", description: "ADA accessibility requirements and details", discipline: "Architectural", date: "2024-01-15", status: "Current", file: "/facility-drawings.pdf" },
-  { sheetNumber: "A-001", title: "Floor Plan - Overview", description: "Overall building floor plan layout", discipline: "Architectural", date: "2024-02-01", status: "Current", file: "/facility-drawings.pdf" },
-  { sheetNumber: "A-002", title: "Floor Plan - Processing Area", description: "Detailed processing area layout with equipment locations", discipline: "Architectural", date: "2024-02-10", status: "Current", file: "/facility-drawings.pdf" },
-  { sheetNumber: "A-003", title: "Floor Plan - Support Areas", description: "Office, warehouse, and support spaces", discipline: "Architectural", date: "2024-02-10", status: "Current", file: "/facility-drawings.pdf" },
-  { sheetNumber: "A-101", title: "Roof Plan", description: "Roof layout, drainage, and equipment locations", discipline: "Architectural", date: "2024-02-15", status: "Current", file: "/facility-drawings.pdf" },
-  { sheetNumber: "A-201", title: "Building Elevations", description: "North, south, east, west exterior elevations", discipline: "Architectural", date: "2024-02-20", status: "Current", file: "/facility-drawings.pdf" },
-  { sheetNumber: "A-301", title: "Building Sections", description: "Longitudinal and transverse building sections", discipline: "Architectural", date: "2024-02-25", status: "Current", file: "/facility-drawings.pdf" },
-  { sheetNumber: "A-401", title: "Wall Sections", description: "Typical wall assemblies and details", discipline: "Architectural", date: "2024-03-01", status: "Revision", file: "/facility-drawings.pdf" },
-  // Structural
-  { sheetNumber: "S-001", title: "Structural General Notes", description: "Structural design criteria and general notes", discipline: "Structural", date: "2024-01-20", status: "Current", file: "/facility-drawings.pdf" },
-  { sheetNumber: "S-002", title: "Foundation Plan", description: "Building foundation layout and details", discipline: "Structural", date: "2024-02-05", status: "Current", file: "/facility-drawings.pdf" },
-  { sheetNumber: "S-101", title: "Structural Framing Plan", description: "Roof and floor framing layout", discipline: "Structural", date: "2024-02-15", status: "Current", file: "/facility-drawings.pdf" },
-  { sheetNumber: "S-201", title: "Structural Details", description: "Connection details and reinforcing specifications", discipline: "Structural", date: "2024-03-01", status: "Revision", file: "/facility-drawings.pdf" },
-  // Mechanical
-  { sheetNumber: "M-001", title: "Mechanical General Notes", description: "HVAC and plumbing design criteria", discipline: "Mechanical", date: "2024-01-25", status: "Current", file: "/facility-drawings.pdf" },
-  { sheetNumber: "M-101", title: "HVAC Plan", description: "Heating, ventilation, and air conditioning layout", discipline: "Mechanical", date: "2024-02-20", status: "Current", file: "/facility-drawings.pdf" },
-  { sheetNumber: "M-201", title: "Plumbing Plan", description: "Water supply and drainage layout", discipline: "Mechanical", date: "2024-02-25", status: "Current", file: "/facility-drawings.pdf" },
-  { sheetNumber: "M-301", title: "Process Piping", description: "Industrial process piping and equipment connections", discipline: "Mechanical", date: "2024-03-05", status: "Revision", file: "/facility-drawings.pdf" },
-  // Electrical
-  { sheetNumber: "E-001", title: "Electrical General Notes", description: "Electrical design criteria and specifications", discipline: "Electrical", date: "2024-01-25", status: "Current", file: "/facility-drawings.pdf" },
-  { sheetNumber: "E-101", title: "Electrical Floor Plan", description: "Power distribution and lighting layout", discipline: "Electrical", date: "2024-02-20", status: "Current", file: "/facility-drawings.pdf" },
-  { sheetNumber: "E-201", title: "One-Line Diagram", description: "Electrical distribution single-line diagram", discipline: "Electrical", date: "2024-03-01", status: "Current", file: "/facility-drawings.pdf" },
-  { sheetNumber: "E-301", title: "Panel Schedules", description: "Electrical panel schedules and load calculations", discipline: "Electrical", date: "2024-03-05", status: "Revision", file: "/facility-drawings.pdf" },
-  // Civil
-  { sheetNumber: "C-001", title: "Civil General Notes", description: "Site work design criteria", discipline: "Civil", date: "2024-01-10", status: "Current", file: "/facility-drawings.pdf" },
-  { sheetNumber: "C-101", title: "Site Plan", description: "Overall site layout and utilities", discipline: "Civil", date: "2024-01-20", status: "Current", file: "/facility-drawings.pdf" },
-  { sheetNumber: "C-201", title: "Grading Plan", description: "Site grading and drainage", discipline: "Civil", date: "2024-02-01", status: "Current", file: "/facility-drawings.pdf" },
-  { sheetNumber: "C-301", title: "Utility Plan", description: "Water, sewer, and storm utilities", discipline: "Civil", date: "2024-02-10", status: "Current", file: "/facility-drawings.pdf" },
-  { sheetNumber: "B/A001", title: "Dumpster Enclosure", description: "Trash enclosure details and specifications", discipline: "Civil", date: "2024-02-15", status: "Current", file: "/facility-drawings.pdf" },
+// Default drawings - used if manifest fails to load
+const DEFAULT_DRAWINGS: Drawing[] = [
+  { sheetNumber: "G-001", title: "General Notes & Legend", description: "Project general notes, abbreviations, and drawing legend", discipline: "General", date: "2024-01-15", status: "Current", file: "/drawings/A-001_General-Notes_2024-03-03_Current.pdf" },
 ]
-
-// ========================================
-// AUTO-GENERATION FUNCTION
-// Add files to /public/drawings/ folder
-// Format: [PREFIX]-[NUMBER]-[TITLE].pdf
-// Auto-generates: sheetNumber, discipline, title, description
-// ========================================
-
-function generateDrawingFromFilename(filename: string): Drawing | null {
-  // Remove .pdf extension
-  const name = filename.replace(/\.pdf$/i, '')
-  
-  // Parse: A-001-Some-Title-Description
-  const match = name.match(/^([A-Za-z])-(\d+)(?:-\d+)?[-_]*(.+)$/)
-  
-  if (!match) {
-    // Try simpler format: A-001.pdf or A001.pdf
-    const simpleMatch = name.match(/^([A-Za-z])[-_]?(\d+)(.*)$/)
-    if (!simpleMatch) return null
-    
-    const [, prefix, number, title] = simpleMatch
-    const discipline = DISCIPLINE_MAP[prefix.toUpperCase()] || 'Other'
-    const sheetNumber = `${prefix.toUpperCase()}-${number.padStart(3, '0')}`
-    
-    return {
-      sheetNumber,
-      title: title.replace(/[-_]/g, ' ').trim() || `${discipline} Drawing ${number}`,
-      description: `${discipline} drawing - ${sheetNumber}`,
-      discipline,
-      date: new Date().toISOString().split('T')[0],
-      status: "Current",
-      file: `/drawings/${filename}`
-    }
-  }
-  
-  const [, prefix, number, title] = match
-  const discipline = DISCIPLINE_MAP[prefix.toUpperCase()] || 'Other'
-  const sheetNumber = `${prefix.toUpperCase()}-${number.padStart(3, '0')}`
-  
-  return {
-    sheetNumber,
-    title: title.replace(/[-_]/g, ' ').trim(),
-    description: `${discipline} drawing - ${sheetNumber}`,
-    discipline,
-    date: new Date().toISOString().split('T')[0],
-    status: "Current",
-    file: `/drawings/${filename}`
-  }
-}
-
-// Get all available drawings (auto + manual)
-function getAllDrawings(): Drawing[] {
-  // In production, you could fetch file list from server
-  // For now, return the predefined drawings
-  return AUTO_DRAWINGS
-}
 
 // Group drawings by discipline
 function groupDrawingsByDiscipline(drawings: Drawing[]): Record<string, Drawing[]> {
@@ -170,9 +81,27 @@ function App() {
   const [selectedStep, setSelectedStep] = useState<number | null>(null)
   const [selectedPdf, setSelectedPdf] = useState<string | null>(null)
   const [activeFilter, setActiveFilter] = useState<string>('All')
+  const [drawings, setDrawings] = useState<Drawing[]>(DEFAULT_DRAWINGS)
+  const [manifestLoaded, setManifestLoaded] = useState(false)
+
+  // Fetch drawings from manifest (generated at build time)
+  useEffect(() => {
+    fetch('/drawings-manifest.json')
+      .then(res => res.json())
+      .then(data => {
+        if (data.drawings && data.drawings.length > 0) {
+          setDrawings(data.drawings)
+        }
+        setManifestLoaded(true)
+      })
+      .catch(() => {
+        console.log('Using default drawings')
+        setManifestLoaded(true)
+      })
+  }, [])
 
   // Get all drawings and apply filter
-  const allDrawings = getAllDrawings()
+  const allDrawings = drawings
   const filteredDrawings = activeFilter === 'All' 
     ? allDrawings 
     : allDrawings.filter(d => d.discipline === activeFilter)
@@ -1115,8 +1044,5 @@ const teamMembers = [
 ]
 
 const extendedTeamCount = 25
-
-// Use auto-generated drawings list
-const drawings = getAllDrawings()
 
 export default App

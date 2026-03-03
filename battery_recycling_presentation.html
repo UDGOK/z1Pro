@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>USA Battery Recycling - Equipment Recommendation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --primary: #0f172a;
+            --secondary: #1e293b;
+            --accent: #10b981;
+            --accent-light: #34d399;
+            --text: #f8fafc;
+            --text-muted: #94a3b8;
+            --border: #334155;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--primary);
+            color: var(--text);
+            line-height: 1.6;
+        }
+        
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 60px 20px;
+            background: linear-gradient(135deg, var(--primary) 0%, #1a1a2e 50%, #16213e 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2310b981' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.5;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 900px;
+        }
+        
+        .hero h1 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 700;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, var(--text) 0%, var(--accent-light) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .hero .subtitle {
+            font-size: clamp(1rem, 2.5vw, 1.5rem);
+            color: var(--text-muted);
+            margin-bottom: 40px;
+            font-weight: 400;
+        }
+        
+        .metrics {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+            margin-bottom: 50px;
+        }
+        
+        .metric {
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            padding: 20px 30px;
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .metric-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--accent);
+            display: block;
+        }
+        
+        .metric-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+        }
+        
+        .scroll-indicator svg {
+            width: 30px;
+            height: 30px;
+            stroke: var(--accent);
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+            40% { transform: translateX(-50%) translateY(-10px); }
+            60% { transform: translateX(-50%) translateY(-5px); }
+        }
+        
+        /* Section Styles */
+        section {
+            padding: 100px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .section-title {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 40px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 3px;
+            background: var(--accent);
+            margin: 15px auto 0;
+            border-radius: 2px;
+        }
+        
+        /* Equipment Section */
+        .equipment-grid {
+            display: grid;
+            gap: 15px;
+        }
+        
+        .equipment-row {
+            display: grid;
+            grid-template-columns: 50px 1fr 1fr 120px;
+            gap: 15px;
+            align-items: center;
+            background: var(--secondary);
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+        
+        .equipment-row:hover {
+            border-color: var(--accent);
+            transform: translateX(5px);
+        }
+        
+        .equipment-row.header {
+            background: transparent;
+            border: none;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+        }
+        
+        .stage-num {
+            width: 40px;
+            height: 40px;
+            background: var(--accent);
+            color: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+        
+        .supplier-tag {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        
+        .supplier-tag.western {
+            background: rgba(59, 130, 246, 0.2);
+            color: #60a5fa;
+            border: 1px solid rgba(59, 130, 246, 0.4);
+        }
+        
+        .supplier-tag.china {
+            background: rgba(239, 68, 68, 0.2);
+            color: #f87171;
+            border: 1px solid rgba(239, 68, 68, 0.4);
+        }
+        
+        .supplier-tag.safety {
+            background: rgba(16, 185, 129, 0.2);
+            color: var(--accent-light);
+            border: 1px solid rgba(16, 185, 129, 0.4);
+        }
+        
+        /* Cost Section */
+        .cost-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-top: 40px;
+        }
+        
+        .cost-card {
+            background: var(--secondary);
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .cost-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+        }
+        
+        .cost-card.highlight {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(16, 185, 129, 0.05) 100%);
+            border-color: var(--accent);
+        }
+        
+        .cost-card h3 {
+            font-size: 1rem;
+            color: var(--text-muted);
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+        
+        .cost-card .amount {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+        
+        /* Suppliers Section */
+        .suppliers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+        
+        .supplier-card {
+            background: var(--secondary);
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            padding: 30px;
+            transition: all 0.3s ease;
+        }
+        
+        .supplier-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-3px);
+        }
+        
+        .supplier-card .origin {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+        
+        .supplier-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+        }
+        
+        .supplier-card p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+        
+        /* Success Factors */
+        .factors-list {
+            display: grid;
+            gap: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .factor-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+            background: var(--secondary);
+            padding: 25px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+        }
+        
+        .factor-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(16, 185, 129, 0.1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        
+        .factor-icon svg {
+            width: 25px;
+            height: 25px;
+            stroke: var(--accent);
+        }
+        
+        .factor-content h3 {
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+        }
+        
+        .factor-content p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+        
+        /* CTA Section */
+        .cta {
+            text-align: center;
+            padding: 100px 20px;
+            background: linear-gradient(135deg, var(--secondary) 0%, var(--primary) 100%);
+        }
+        
+        .cta h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+        
+        .cta p {
+            color: var(--text-muted);
+            margin-bottom: 30px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .equipment-row {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            
+            .equipment-row .stage-num {
+                margin: 0 auto;
+            }
+            
+            .metrics {
+                gap: 20px;
+            }
+            
+            .metric {
+                padding: 15px 20px;
+            }
+        }
+        
+        /* Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+        
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>USA Battery Recycling Plant</h1>
+            <p class="subtitle">Equipment Recommendation Report<br>Hybrid Approach: Chinese Equipment + Western Safety Systems</p>
+            
+            <div class="metrics">
+                <div class="metric">
+                    <span class="metric-value">$300K-500K</span>
+                    <span class="metric-label">Total CAPEX</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-value">1-2 t/h</span>
+                    <span class="metric-label">Capacity</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-value">24-30 mo</span>
+                    <span class="metric-label">Payback</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="scroll-indicator">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M7 13l5 5 5-5M7 6l5 5 5-5"/>
+            </svg>
+        </div>
+    </section>
+    
+    <!-- Equipment Stack -->
+    <section id="equipment">
+        <h2 class="section-title">Recommended Equipment Stack</h2>
+        
+        <div class="equipment-grid">
+            <div class="equipment-row header">
+                <span>Stage</span>
+                <span>Equipment</span>
+                <span>Supplier</span>
+                <span>Cost</span>
+            </div>
+            
+            <div class="equipment-row fade-in">
+                <span class="stage-num">1</span>
+                <span>Primary Shredder (Double-shaft, N₂-ready)</span>
+                <span><span class="supplier-tag china">Genox / Xingmao</span></span>
+                <span>$25K-45K</span>
+            </div>
+            
+            <div class="equipment-row fade-in">
+                <span class="stage-num">2</span>
+                <span>Hammer Mill (1500 rpm optimal)</span>
+                <span><span class="supplier-tag china">Xingmao / Henan Doing</span></span>
+                <span>$15K-25K</span>
+            </div>
+            
+            <div class="equipment-row fade-in">
+                <span class="stage-num">3</span>
+                <span>Screening (Multi-deck, 2/5/20mm)</span>
+                <span><span class="supplier-tag china">Xingmao</span></span>
+                <span>$8K-15K</span>
+            </div>
+            
+            <div class="equipment-row fade-in">
+                <span class="stage-num">4</span>
+                <span>Magnetic Separator (Rare Earth Drum)</span>
+                <span><span class="supplier-tag western">Eriez USA</span></span>
+                <span>$10K-20K</span>
+            </div>
+            
+            <div class="equipment-row fade-in">
+                <span class="stage-num">5</span>
+                <span>Eddy Current Separator</span>
+                <span><span class="supplier-tag western">Eriez USA</span></span>
+                <span>$20K-35K</span>
+            </div>
+            
+            <div class="equipment-row fade-in">
+                <span class="stage-num">6</span>
+                <span>Air Classifier (Density Separation)</span>
+                <span><span class="supplier-tag china">Xingmao</span></span>
+                <span>$10K-20K</span>
+            </div>
+            
+            <div class="equipment-row fade-in">
+                <span class="stage-num">7</span>
+                <span>Dust Collection (HEPA)</span>
+                <span><span class="supplier-tag china">Xingmao + Western Filters</span></span>
+                <span>$10K-18K</span>
+            </div>
+            
+            <div class="equipment-row fade-in">
+                <span class="stage-num">8</span>
+                <span>Nitrogen System (Membrane + O₂ Monitoring)</span>
+                <span><span class="supplier-tag safety">Generon USA</span></span>
+                <span>$30K-50K</span>
+            </div>
+            
+            <div class="equipment-row fade-in">
+                <span class="stage-num">9</span>
+                <span>Fire Suppression (Water Mist + CO₂)</span>
+                <span><span class="supplier-tag safety">Siemens USA</span></span>
+                <span>$25K-40K</span>
+            </div>
+            
+            <div class="equipment-row fade-in">
+                <span class="stage-num">10</span>
+                <span>Gas Detection (HF, HCN, CO)</span>
+                <span><span class="supplier-tag safety">Drager / Honeywell</span></span>
+                <span>$15K-30K</span>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Cost Breakdown -->
+    <section id="costs">
+        <h2 class="section-title">Cost Breakdown</h2>
+        
+        <div class="cost-grid">
+            <div class="cost-card fade-in">
+                <h3>Chinese Equipment</h3>
+                <span class="amount">$100K-180K</span>
+            </div>
+            
+            <div class="cost-card fade-in">
+                <h3>Western Safety + Separation</h3>
+                <span class="amount">$80K-135K</span>
+            </div>
+            
+            <div class="cost-card fade-in">
+                <h3>Equipment Total</h3>
+                <span class="amount">$180K-315K</span>
+            </div>
+            
+            <div class="cost-card fade-in">
+                <h3>Installation & Commissioning</h3>
+                <span class="amount">$80K-150K</span>
+            </div>
+            
+            <div class="cost-card highlight fade-in">
+                <h3>Project Total</h3>
+                <span class="amount">$300K-500K</span>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Suppliers -->
+    <section id="suppliers">
+        <h2 class="section-title">Key Suppliers</h2>
+        
+        <div class="suppliers-grid">
+            <div class="supplier-card fade-in">
+                <p class="origin">China</p>
+                <h3>Genox</h3>
+                <p>Complete recycling lines, shredders. Has US office (Genox USA). Partnerships with Sicon GmbH.</p>
+            </div>
+            
+            <div class="supplier-card fade-in">
+                <p class="origin">China</p>
+                <h3>Xingmao</h3>
+                <p>Complete lines. Verified 1.5 t/h USA install, 2 t/h South Korea install. Strong international track record.</p>
+            </div>
+            
+            <div class="supplier-card fade-in">
+                <p class="origin">USA</p>
+                <h3>Eriez</h3>
+                <p>Magnetic & eddy current separators. Industry standard, highest recovery rates.</p>
+            </div>
+            
+            <div class="supplier-card fade-in">
+                <p class="origin">USA</p>
+                <h3>Generon</h3>
+                <p>Nitrogen membrane generators. Industry standard for inert atmosphere.</p>
+            </div>
+            
+            <div class="supplier-card fade-in">
+                <p class="origin">USA / Germany</p>
+                <h3>Drager</h3>
+                <p>Gas detection systems (HF, HCN, CO). ATEX certified, regulatory acceptance.</p>
+            </div>
+            
+            <div class="supplier-card fade-in">
+                <p class="origin">USA</p>
+                <h3>Siemens</h3>
+                <p>Fire suppression systems. Industry standard, insurance approved.</p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Success Factors -->
+    <section id="factors">
+        <h2 class="section-title">Critical Success Factors</h2>
+        
+        <div class="factors-list">
+            <div class="factor-item fade-in">
+                <div class="factor-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                    </svg>
+                </div>
+                <div class="factor-content">
+                    <h3>Feedstock First</h3>
+                    <p>Secure 2-3 year battery supply agreements with collectors, electronics recyclers, or automotive OEMs before purchasing equipment.</p>
+                </div>
+            </div>
+            
+            <div class="factor-item fade-in">
+                <div class="factor-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                </div>
+                <div class="factor-content">
+                    <h3>Offtake Contracts</h3>
+                    <p>Identify 2-3 black mass buyers (Li-Cycle, Redwood Materials, Umicore, Glencore) and negotiate pricing tied to metal prices.</p>
+                </div>
+            </div>
+            
+            <div class="factor-item fade-in">
+                <div class="factor-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                    </svg>
+                </div>
+                <div class="factor-content">
+                    <h3>Safety Budget - Non-Negotiable</h3>
+                    <p>Do not reduce Western safety system allocation. One incident can destroy your business. Insurance requires proper systems.</p>
+                </div>
+            </div>
+            
+            <div class="factor-item fade-in">
+                <div class="factor-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
+                        <circle cx="12" cy="12" r="3"/>
+                    </svg>
+                </div>
+                <div class="factor-content">
+                    <h3>Installation Planning</h3>
+                    <p>Budget 25-35% above equipment cost for installation, integration, and commissioning. Chinese equipment requires more planning.</p>
+                </div>
+            </div>
+            
+            <div class="factor-item fade-in">
+                <div class="factor-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4"/>
+                    </svg>
+                </div>
+                <div class="factor-content">
+                    <h3>Spare Parts Inventory</h3>
+                    <p>Order 6-month spare parts inventory with equipment delivery. Lead times from China are 4-8 weeks. Minimize downtime risk.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- CTA -->
+    <section class="cta">
+        <h2>Ready to Build Your Plant?</h2>
+        <p>Contact the recommended suppliers above to request quotes. Start with feedstock agreements and offtake contracts before equipment purchases.</p>
+    </section>
+    
+    <script>
+        // Scroll Animation
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+        
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>

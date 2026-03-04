@@ -9,7 +9,7 @@
   "routes": [
     {
       "src": "/api/comments",
-      "methods": ["GET", "POST", "OPTIONS"],
+      "methods": ["GET", "POST", "DELETE", "OPTIONS"],
       "dest": "/api/comments.js"
     }
   ],

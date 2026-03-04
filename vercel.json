@@ -1,16 +1,5 @@
 {
-  "version": 2,
-  "builds": [
-    {
-      "src": "api/comments.js",
-      "use": "@vercel/node"
-    }
-  ],
-  "routes": [
-    {
-      "src": "/api/comments",
-      "methods": ["GET", "POST", "DELETE", "OPTIONS"],
-      "dest": "/api/comments.js"
-    }
+  "rewrites": [
+    { "source": "/api/comments", "destination": "/api/comments.js" }
   ]
 }

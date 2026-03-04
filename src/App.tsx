@@ -12,37 +12,39 @@ interface Machine {
   description: string
   specs: string
   icon: string
+  image: string
+  model: string
 }
 
 const machineCategories = {
   'Sorting & Separation': [
-    { id: 'crusher', name: 'Primary Crusher', category: 'Sorting & Separation', description: 'Heavy-duty shredding of battery packs', specs: '15-30 kW | 1-3 t/h', icon: '⚙️' },
-    { id: 'grinder', name: 'Hammer Mill Grinder', category: 'Sorting & Separation', description: 'Fine grinding for material liberation', specs: '45-75 kW | 2-5 t/h', icon: '🔄' },
-    { id: 'separator', name: 'Air Separator', category: 'Sorting & Separation', description: 'Density-based material separation', specs: '11-22 kW | 1-4 t/h', icon: '💨' },
-    { id: 'magnetic', name: 'Magnetic Separator', category: 'Sorting & Separation', description: 'Iron and steel extraction', specs: '2-5 kW | 3-8 t/h', icon: '🧲' },
-    { id: 'eddy', name: 'Eddy Current Separator', category: 'Sorting & Separation', description: 'Non-ferrous metal recovery', specs: '15-30 kW | 2-6 t/h', icon: '⚡' },
+    { id: 'crusher', name: 'Primary Crusher', category: 'Sorting & Separation', description: 'Heavy-duty shredding of battery packs into smaller fragments for further processing. Features high-torque motor and reinforced cutting blades.', specs: '15-30 kW | 1-3 t/h', icon: '⚙️', image: '/imgs/industrial-battery-recycling-shredder-blades.jpg', model: 'BC-3000 Series' },
+    { id: 'grinder', name: 'Hammer Mill Grinder', category: 'Sorting & Separation', description: 'Fine grinding for material liberation. Achieves uniform particle size for optimal separation.', specs: '45-75 kW | 2-5 t/h', icon: '🔄', image: '/imgs/industrial-hammer-mill-grinder-machine.jpg', model: 'HM-500 Pro' },
+    { id: 'separator', name: 'Air Separator', category: 'Sorting & Separation', description: 'Density-based material separation using airflow. Separates light materials from heavy fractions.', specs: '11-22 kW | 1-4 t/h', icon: '💨', image: '/imgs/industrial-air-separator-machine-waste-sorting.jpg', model: 'AS-2000' },
+    { id: 'magnetic', name: 'Magnetic Separator', category: 'Sorting & Separation', description: 'Extracts iron and steel from shredded material using high-intensity magnetic fields.', specs: '2-5 kW | 3-8 t/h', icon: '🧲', image: '/imgs/industrial-magnetic-separator-metal-machine.jpg', model: 'MS-1500' },
+    { id: 'eddy', name: 'Eddy Current Separator', category: 'Sorting & Separation', description: 'Non-ferrous metal recovery using induced magnetic fields. Separates aluminum, copper, and other conductive metals.', specs: '15-30 kW | 2-6 t/h', icon: '⚡', image: '/imgs/eddy-current-separator-non-ferrous-diagram.jpg', model: 'ECS-800' },
   ],
   'Chemical Processing': [
-    { id: 'leaching', name: 'Leaching Reactor', category: 'Chemical Processing', description: 'Acid/alkaline solution for metal extraction', specs: '30-50 kW | 500-2000L', icon: '🧪' },
-    { id: 'precipitation', name: 'Precipitation Tank', category: 'Chemical Processing', description: 'Chemical precipitation of metals', specs: '5-15 kW | 1000-5000L', icon: '🎯' },
-    { id: 'extraction', name: 'Solvent Extraction', category: 'Chemical Processing', description: 'Selective metal recovery', specs: '10-25 kW | 200-1000L', icon: '🔬' },
-    { id: 'electrowinning', name: 'Electrowinning Cell', category: 'Chemical Processing', description: 'Electrochemical metal recovery', specs: '20-50 kW | 100-500A', icon: '⚗️' },
+    { id: 'leaching', name: 'Leaching Reactor', category: 'Chemical Processing', description: 'Acid or alkaline solution dissolves metals from crushed battery materials for recovery.', specs: '30-50 kW | 500-2000L', icon: '🧪', image: '/imgs/leaching-reactor-chemical-tank-industrial.jpg', model: 'LR-3000' },
+    { id: 'precipitation', name: 'Precipitation Tank', category: 'Chemical Processing', description: 'Chemical precipitation of dissolved metals as solid compounds for collection.', specs: '5-15 kW | 1000-5000L', icon: '🎯', image: '/imgs/industrial-chemical-precipitation-cone-bottom-tank.jpg', model: 'PT-500' },
+    { id: 'extraction', name: 'Solvent Extraction', category: 'Chemical Processing', description: 'Selective metal recovery using organic solvents. Achieves high purity metal concentrates.', specs: '10-25 kW | 200-1000L', icon: '🔬', image: '/imgs/scheibel-column-solvent-extraction-pilot-plant-diagram.jpg', model: 'SX-200' },
+    { id: 'electrowinning', name: 'Electrowinning Cell', category: 'Chemical Processing', description: 'Electrochemical recovery of pure metals from solution using electrical current.', specs: '20-50 kW | 100-500A', icon: '⚗️', image: '/imgs/industrial-electrowinning-cell-copper-extraction.jpg', model: 'EW-1000' },
   ],
   'Thermal Treatment': [
-    { id: 'pyrolysis', name: 'Pyrolysis Furnace', category: 'Thermal Treatment', description: 'Organic material decomposition', specs: '50-150 kW | 300-800°C', icon: '🔥' },
-    { id: 'calciner', name: 'Rotary Calciner', category: 'Thermal Treatment', description: 'High-temperature material processing', specs: '80-200 kW | 800-1200°C', icon: '🌡️' },
-    { id: 'dryer', name: 'Industrial Dryer', category: 'Thermal Treatment', description: 'Moisture removal and drying', specs: '20-60 kW | 100-500 kg/h', icon: '💧' },
+    { id: 'pyrolysis', name: 'Pyrolysis Furnace', category: 'Thermal Treatment', description: 'Thermal decomposition of organic materials in oxygen-free environment. Recovers carbon and reduces waste.', specs: '50-150 kW | 300-800°C', icon: '🔥', image: '/imgs/industrial-pyrolysis-furnace-waste-recycling.jpg', model: 'PY-800' },
+    { id: 'calciner', name: 'Rotary Calciner', category: 'Thermal Treatment', description: 'High-temperature processing for material transformation and purification.', specs: '80-200 kW | 800-1200°C', icon: '🌡️', image: '/imgs/industrial-rotary-calciner-furnace-render.jpg', model: 'RC-1500' },
+    { id: 'dryer', name: 'Industrial Dryer', category: 'Thermal Treatment', description: 'Moisture removal from processed materials using heated air circulation.', specs: '20-60 kW | 100-500 kg/h', icon: '💧', image: '/imgs/industrial-rotary-dryer-machine-manufacturing.jpg', model: 'ID-300' },
   ],
   'Material Handling': [
-    { id: 'conveyor', name: 'Belt Conveyor System', category: 'Material Handling', description: 'Automated material transport', specs: '3-15 kW | 10-50 t/h', icon: '➡️' },
-    { id: 'feeder', name: 'Vibratory Feeder', category: 'Material Handling', description: 'Controlled material input', specs: '1-5 kW | 1-10 t/h', icon: '📳' },
-    { id: 'hopper', name: 'Storage Hopper', category: 'Material Handling', description: 'Raw material storage', specs: '5-50 m³ capacity', icon: '📦' },
-    { id: 'dust', name: 'Dust Collection System', category: 'Material Handling', description: 'Air filtration and particulate control', specs: '15-40 kW | 5000-20000 m³/h', icon: '🌬️' },
+    { id: 'conveyor', name: 'Belt Conveyor System', category: 'Material Handling', description: 'Automated material transport between process stages with adjustable speed control.', specs: '3-15 kW | 10-50 t/h', icon: '➡️', image: '/imgs/industrial-belt-conveyor-system-labeled-diagram.jpg', model: 'BCS-500' },
+    { id: 'feeder', name: 'Vibratory Feeder', category: 'Material Handling', description: 'Controlled material input with adjustable feed rate. Ensures consistent flow.', specs: '1-5 kW | 1-10 t/h', icon: '📳', image: '/imgs/industrial-vibratory-feeder-material-handling.jpg', model: 'VF-200' },
+    { id: 'hopper', name: 'Storage Hopper', category: 'Material Handling', description: 'Raw material storage with controlled discharge. Features angled bottom for easy emptying.', specs: '5-50 m³ capacity', icon: '📦', image: '/imgs/industrial-storage-hopper-bin.jpg', model: 'SH-100' },
+    { id: 'dust', name: 'Dust Collection System', category: 'Material Handling', description: 'Air filtration and particulate control. Protects workers and environment.', specs: '15-40 kW | 5000-20000 m³/h', icon: '🌬️', image: '/imgs/industrial-dust-collection-system-schematic.jpg', model: 'DCS-1000' },
   ],
   'Environmental Systems': [
-    { id: 'scrubber', name: 'Gas Scrubber', category: 'Environmental Systems', description: 'Hazardous gas treatment', specs: '10-30 kW | 1000-5000 m³/h', icon: '🛡️' },
-    { id: 'wastewater', name: 'Wastewater Treatment', category: 'Environmental Systems', description: 'Process water purification', specs: '15-45 kW | 10-50 m³/h', icon: '🌊' },
-    { id: 'filter', name: 'HEPA Filter System', category: 'Environmental Systems', description: 'High-efficiency air filtration', specs: '5-15 kW | 1000-3000 m³/h', icon: '🔳' },
+    { id: 'scrubber', name: 'Gas Scrubber', category: 'Environmental Systems', description: 'Hazardous gas treatment using liquid spray to remove pollutants before emission.', specs: '10-30 kW | 1000-5000 m³/h', icon: '🛡️', image: '/imgs/industrial-gas-scrubber-technical-diagram.jpg', model: 'GS-500' },
+    { id: 'wastewater', name: 'Wastewater Treatment', category: 'Environmental Systems', description: 'Process water purification using filtration and chemical treatment. Enables water reuse.', specs: '15-45 kW | 10-50 m³/h', icon: '🌊', image: '/imgs/isometric-industrial-wastewater-treatment-system.jpg', model: 'WWT-200' },
+    { id: 'filter', name: 'HEPA Filter System', category: 'Environmental Systems', description: 'High-efficiency air filtration capturing 99.97% of particles down to 0.3 microns.', specs: '5-15 kW | 1000-3000 m³/h', icon: '🔳', image: '/imgs/industrial-v-bank-hepa-air-filter.jpg', model: 'HF-300' },
   ],
 }
 
@@ -227,33 +229,23 @@ function App() {
               </a>
               {machineMenuOpen && (
                 <div className="nav-dropdown">
-                  <div className="dropdown-particles"></div>
-                  <div className="dropdown-grid-bg"></div>
-                  {Object.entries(machineCategories).map(([category, machines]) => (
-                    <div 
-                      key={category} 
-                      className={`dropdown-category ${activeCategory === category ? 'active' : ''}`}
-                      onMouseEnter={() => setActiveCategory(category)}
-                      onMouseLeave={() => setActiveCategory(null)}
-                    >
-                      <div className="category-header">
-                        <span className="category-icon">{machines[0].icon}</span>
-                        <span className="category-name">{category}</span>
-                      </div>
-                      <div className="category-machines">
-                        {machines.map((machine) => (
-                          <div key={machine.id} className="machine-item">
-                            <div className="machine-icon">{machine.icon}</div>
-                            <div className="machine-info">
-                              <div className="machine-name">{machine.name}</div>
-                              <div className="machine-specs">{machine.specs}</div>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  ))}
                   <div className="dropdown-glow"></div>
+                  {Object.entries(machineCategories).map(([category, machines]) => (
+                    <a 
+                      key={category} 
+                      href={`#machines-${category.toLowerCase().replace(/[^a-z0-9]/g, '-')}`}
+                      className="dropdown-item"
+                      onClick={(e) => {
+                        e.preventDefault()
+                        setMachineMenuOpen(false)
+                        scrollToSection(`machines-${category.toLowerCase().replace(/[^a-z0-9]/g, '-')}`)
+                      }}
+                    >
+                      <span className="dropdown-icon">{machines[0].icon}</span>
+                      <span className="dropdown-label">{category}</span>
+                      <span className="dropdown-count">{machines.length}</span>
+                    </a>
+                  ))}
                 </div>
               )}
             </div>
@@ -660,6 +652,35 @@ function App() {
           </svg>
         </a>
       </section>
+
+      {/* Machine Sections */}
+      {Object.entries(machineCategories).map(([category, machines]) => (
+        <section key={category} id={`machines-${category.toLowerCase().replace(/[^a-z0-9]/g, '-')}`} className="machine-section">
+          <div className="section-header">
+            <span className="section-number">// {category}</span>
+            <h2 className="section-title">{category} Equipment</h2>
+          </div>
+          <div className="machines-grid">
+            {machines.map((machine) => (
+              <div key={machine.id} className="machine-card">
+                <div className="machine-image">
+                  <img src={machine.image} alt={machine.name} />
+                  <div className="machine-image-glow"></div>
+                </div>
+                <div className="machine-content">
+                  <div className="machine-model">{machine.model}</div>
+                  <h3 className="machine-title">{machine.name}</h3>
+                  <p className="machine-description">{machine.description}</p>
+                  <div className="machine-specs">
+                    <span className="spec-label">Specifications</span>
+                    <span className="spec-value">{machine.specs}</span>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+      ))}
 
       {/* Modal */}
       {selectedStep !== null && (

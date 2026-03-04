@@ -1,0 +1,19 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "api/comments.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/comments",
+      "methods": ["GET", "POST", "OPTIONS"],
+      "dest": "/api/comments.js"
+    }
+  ],
+  "env": {
+    "DATABASE_URL": "@neon-database-url"
+  }
+}

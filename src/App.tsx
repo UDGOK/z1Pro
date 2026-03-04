@@ -182,37 +182,67 @@ function App() {
     }
   }, [machineMenuOpen])
 
-  // Load comments from localStorage
+  // Load comments from API on mount
   useEffect(() => {
-    const saved = localStorage.getItem('z1question_comments')
-    if (saved) {
-      setComments(JSON.parse(saved))
-    }
+    fetch('https://z1-process-api.vercel.app/api/comments')
+      .then(res => res.json())
+      .then(data => {
+        if (Array.isArray(data)) {
+          setComments(data)
+        }
+      })
+      .catch(() => {
+        // Fallback to localStorage
+        const saved = localStorage.getItem('z1question_comments')
+        if (saved) {
+          setComments(JSON.parse(saved))
+        }
+      })
   }, [])
 
-  // Save comments to localStorage
+  // Save comments to localStorage as backup
   const saveComments = (newComments: Comment[]) => {
     setComments(newComments)
     localStorage.setItem('z1question_comments', JSON.stringify(newComments))
   }
 
-  // Submit a new comment
-  const submitComment = (questionIndex: number) => {
+  // Submit a new comment to API
+  const submitComment = async (questionIndex: number) => {
     if (!commentForm.name || !commentForm.email || !commentForm.comment) return
     
     setSubmitting(true)
     
-    const newComment: Comment = {
-      id: Date.now(),
-      questionIndex,
-      name: commentForm.name,
-      email: commentForm.email,
-      comment: commentForm.comment,
-      createdAt: new Date().toISOString()
+    try {
+      const res = await fetch('https://z1-process-api.vercel.app/api/comments', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          questionIndex,
+          name: commentForm.name,
+          email: commentForm.email,
+          comment: commentForm.comment
+        })
+      })
+      
+      if (res.ok) {
+        const newComment = await res.json()
+        setComments([...comments, newComment])
+      }
+    } catch (error) {
+      console.error('Failed to submit comment to API, using localStorage')
+      // Fallback to localStorage
+      const newComment: Comment = {
+        id: Date.now(),
+        questionIndex,
+        name: commentForm.name,
+        email: commentForm.email,
+        comment: commentForm.comment,
+        createdAt: new Date().toISOString()
+      }
+      setComments([...comments, newComment])
+      localStorage.setItem('z1question_comments', JSON.stringify([...comments, newComment]))
     }
     
-    const updated = [...comments, newComment]
-    saveComments(updated)
     setCommentForm({ name: '', email: '', comment: '' })
     setSubmitting(false)
   }

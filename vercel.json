@@ -12,8 +12,5 @@
       "methods": ["GET", "POST", "DELETE", "OPTIONS"],
       "dest": "/api/comments.js"
     }
-  ],
-  "env": {
-    "DATABASE_URL": "@neon-database-url"
-  }
+  ]
 }

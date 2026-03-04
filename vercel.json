@@ -1,5 +1,27 @@
 {
-  "rewrites": [
-    { "source": "/api/comments", "destination": "/api/comments.js" }
+  "version": 2,
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@vercel/static-build",
+      "config": {
+        "outputDirectory": "dist"
+      }
+    },
+    {
+      "src": "api/comments.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    { "handle": "filesystem" },
+    {
+      "src": "/api/comments",
+      "dest": "/api/comments.js"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/dist/$1"
+    }
   ]
 }

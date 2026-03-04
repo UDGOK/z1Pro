@@ -123,6 +123,16 @@ interface ProcessStepDetail {
   whyNeeded: string
 }
 
+// Comment interface
+interface Comment {
+  id: number
+  questionIndex: number
+  name: string
+  email: string
+  comment: string
+  createdAt: string
+}
+
 function App() {
   const [activeSection, setActiveSection] = useState('hero')
   const [selectedStep, setSelectedStep] = useState<number | null>(null)
@@ -132,6 +142,10 @@ function App() {
   const [manifestLoaded, setManifestLoaded] = useState(false)
   const [machineMenuOpen, setMachineMenuOpen] = useState(false)
   const [activeCategory, setActiveCategory] = useState<string | null>(null)
+  const [comments, setComments] = useState<Comment[]>([])
+  const [activeQuestion, setActiveQuestion] = useState<number | null>(null)
+  const [commentForm, setCommentForm] = useState({ name: '', email: '', comment: '' })
+  const [submitting, setSubmitting] = useState(false)
 
   // Fetch drawings from manifest (generated at build time)
   useEffect(() => {
@@ -167,6 +181,46 @@ function App() {
       document.removeEventListener('click', handleClickOutside)
     }
   }, [machineMenuOpen])
+
+  // Load comments from localStorage
+  useEffect(() => {
+    const saved = localStorage.getItem('z1question_comments')
+    if (saved) {
+      setComments(JSON.parse(saved))
+    }
+  }, [])
+
+  // Save comments to localStorage
+  const saveComments = (newComments: Comment[]) => {
+    setComments(newComments)
+    localStorage.setItem('z1question_comments', JSON.stringify(newComments))
+  }
+
+  // Submit a new comment
+  const submitComment = (questionIndex: number) => {
+    if (!commentForm.name || !commentForm.email || !commentForm.comment) return
+    
+    setSubmitting(true)
+    
+    const newComment: Comment = {
+      id: Date.now(),
+      questionIndex,
+      name: commentForm.name,
+      email: commentForm.email,
+      comment: commentForm.comment,
+      createdAt: new Date().toISOString()
+    }
+    
+    const updated = [...comments, newComment]
+    saveComments(updated)
+    setCommentForm({ name: '', email: '', comment: '' })
+    setSubmitting(false)
+  }
+
+  // Get comments for a specific question
+  const getQuestionComments = (questionIndex: number) => {
+    return comments.filter(c => c.questionIndex === questionIndex)
+  }
 
   // Get all drawings and apply filter
   const allDrawings = drawings
@@ -443,7 +497,9 @@ function App() {
         </div>
         
         <div className="questions-grid">
-          {engineeringQuestions.map((q, index) => (
+          {engineeringQuestions.map((q, index) => {
+            const questionComments = getQuestionComments(index)
+            return (
             <div key={index} className="question-card">
               <div className="question-number">Q{index + 1}</div>
               <h3>{q.question}</h3>
@@ -451,8 +507,74 @@ function App() {
               <div className="question-importance">
                 <span className={`importance-tag ${q.importance}`}>{q.importance}</span>
               </div>
+              
+              {/* Comment Toggle */}
+              <button 
+                className="comment-toggle"
+                onClick={() => setActiveQuestion(activeQuestion === index ? null : index)}
+              >
+                💬 {questionComments.length} {questionComments.length === 1 ? 'Reply' : 'Replies'}
+              </button>
+              
+              {/* Comments Section */}
+              {activeQuestion === index && (
+                <div className="comments-section">
+                  {questionComments.length > 0 ? (
+                    <div className="comments-list">
+                      {questionComments.map((c) => (
+                        <div key={c.id} className="comment-item">
+                          <div className="comment-header">
+                            <span className="comment-name">{c.name}</span>
+                            <span className="comment-date">
+                              {new Date(c.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+                            </span>
+                          </div>
+                          <p className="comment-text">{c.comment}</p>
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <p className="no-comments">No replies yet. Be the first to reply!</p>
+                  )}
+                  
+                  {/* Comment Form */}
+                  <div className="comment-form">
+                    <h4>Add Your Reply</h4>
+                    <div className="form-row">
+                      <input
+                        type="text"
+                        placeholder="Your Name"
+                        value={commentForm.name}
+                        onChange={(e) => setCommentForm({...commentForm, name: e.target.value})}
+                        className="comment-input"
+                      />
+                      <input
+                        type="email"
+                        placeholder="Your Email"
+                        value={commentForm.email}
+                        onChange={(e) => setCommentForm({...commentForm, email: e.target.value})}
+                        className="comment-input"
+                      />
+                    </div>
+                    <textarea
+                      placeholder="Write your reply..."
+                      value={commentForm.comment}
+                      onChange={(e) => setCommentForm({...commentForm, comment: e.target.value})}
+                      className="comment-textarea"
+                      rows={3}
+                    />
+                    <button 
+                      className="submit-comment-btn"
+                      onClick={() => submitComment(index)}
+                      disabled={submitting || !commentForm.name || !commentForm.email || !commentForm.comment}
+                    >
+                      {submitting ? 'Posting...' : 'Post Reply'}
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
-          ))}
+          )})}
         </div>
 
         <div className="questions-note">
@@ -460,7 +582,8 @@ function App() {
           <ol>
             <li>Schedule engineering review meeting with this document</li>
             <li>Request quotes from at least 2 suppliers per major equipment category</li>
-            <li>Contact Oklahoma DEQ Air Quality Division for pre-application meeting</li>
+            <li>Contact
+            Oklahoma DEQ Air Quality Division for pre-application meeting</li>
             <li>Engage a metallurgical engineer or battery recycling consultant</li>
             <li>Develop feedstock supply agreements with 2-3 potential suppliers</li>
           </ol>

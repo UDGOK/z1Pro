@@ -7,7 +7,7 @@ const pool = new Pool({
 export default async function handler(req, res) {
   // Set CORS headers
   res.setHeader('Access-Control-Allow-Origin', '*')
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, DELETE, OPTIONS')
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type')
 
   if (req.method === 'OPTIONS') {
@@ -61,6 +61,18 @@ export default async function handler(req, res) {
         comment: row.comment,
         createdAt: row.created_at
       })
+    }
+
+    if (req.method === 'DELETE') {
+      const { id } = req.query
+      
+      if (!id) {
+        return res.status(400).json({ error: 'Comment ID required' })
+      }
+      
+      await pool.query('DELETE FROM question_comments WHERE id = $1', [parseInt(id)])
+      
+      return res.status(200).json({ success: true })
     }
     
     return res.status(405).json({ error: 'Method not allowed' })

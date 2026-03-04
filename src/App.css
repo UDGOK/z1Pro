@@ -2539,3 +2539,215 @@ section {
     gap: 20px;
   }
 }
+
+
+/* Admin Panel */
+.admin-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(10px);
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.admin-panel {
+  background: var(--bg-card);
+  border: 1px solid var(--neon-green);
+  border-radius: 16px;
+  width: 100%;
+  max-width: 700px;
+  max-height: 80vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 0 60px rgba(0, 255, 136, 0.2);
+}
+
+.admin-login {
+  padding: 40px;
+  text-align: center;
+}
+
+.admin-login h2 {
+  color: var(--neon-green);
+  margin-bottom: 10px;
+}
+
+.admin-login p {
+  color: var(--text-muted);
+  margin-bottom: 25px;
+}
+
+.admin-password-input {
+  width: 100%;
+  max-width: 300px;
+  padding: 14px 18px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 10px;
+  color: var(--text-primary);
+  font-size: 1rem;
+  margin-bottom: 15px;
+}
+
+.admin-password-input:focus {
+  outline: none;
+  border-color: var(--neon-green);
+}
+
+.admin-login-btn {
+  display: block;
+  width: 100%;
+  max-width: 300px;
+  margin: 0 auto 10px;
+  padding: 14px;
+  background: linear-gradient(135deg, var(--neon-green), var(--neon-cyan));
+  border: none;
+  border-radius: 10px;
+  color: var(--bg-dark);
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.admin-login-btn:hover {
+  transform: translateY(-2px);
+}
+
+.admin-close-btn {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: var(--text-muted);
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.admin-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 25px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.admin-header h2 {
+  color: var(--neon-green);
+  font-size: 1.3rem;
+  margin: 0;
+}
+
+.admin-close {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 2rem;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.admin-stats {
+  padding: 20px 25px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.stat-card {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  background: rgba(0, 255, 136, 0.1);
+  border: 1px solid var(--neon-green);
+  border-radius: 12px;
+  padding: 15px 30px;
+}
+
+.stat-number {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--neon-green);
+}
+
+.stat-label {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.admin-comments-list {
+  padding: 20px 25px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.admin-comment-item {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 12px;
+}
+
+.admin-comment-item:last-child {
+  margin-bottom: 0;
+}
+
+.comment-info {
+  margin-bottom: 10px;
+}
+
+.comment-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+
+.comment-name {
+  font-weight: 600;
+  color: var(--neon-cyan);
+}
+
+.comment-email {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.comment-date {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  display: block;
+}
+
+.comment-question-ref {
+  font-size: 0.8rem;
+  color: var(--neon-green);
+  margin-top: 4px;
+}
+
+.comment-message {
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin-bottom: 12px;
+}
+
+.delete-btn {
+  background: rgba(255, 51, 102, 0.15);
+  border: 1px solid rgba(255, 51, 102, 0.4);
+  color: #ff3366;
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: all 0.2s;
+}
+
+.delete-btn:hover {
+  background: rgba(255, 51, 102, 0.25);
+}

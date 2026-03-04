@@ -146,6 +146,18 @@ function App() {
   const [activeQuestion, setActiveQuestion] = useState<number | null>(null)
   const [commentForm, setCommentForm] = useState({ name: '', email: '', comment: '' })
   const [submitting, setSubmitting] = useState(false)
+  
+  // Admin state
+  const [showAdmin, setShowAdmin] = useState(false)
+  const [adminPassword, setAdminPassword] = useState('')
+  const [isAdmin, setIsAdmin] = useState(false)
+
+  // Check for admin hash in URL
+  useEffect(() => {
+    if (window.location.hash === '#admin') {
+      setShowAdmin(true)
+    }
+  }, [])
 
   // Fetch drawings from manifest (generated at build time)
   useEffect(() => {
@@ -250,6 +262,32 @@ function App() {
   // Get comments for a specific question
   const getQuestionComments = (questionIndex: number) => {
     return comments.filter(c => c.questionIndex === questionIndex)
+  }
+
+  // Admin login
+  const handleAdminLogin = () => {
+    // Simple password - change this to something more secure
+    if (adminPassword === 'Z1Admin2024!') {
+      setIsAdmin(true)
+      setShowAdmin(true)
+      setAdminPassword('')
+    } else {
+      alert('Invalid password')
+    }
+  }
+
+  // Delete comment
+  const deleteComment = async (commentId: number) => {
+    if (!confirm('Are you sure you want to delete this comment?')) return
+    
+    try {
+      await fetch(`https://process.z1recycle.com/api/comments?id=${commentId}`, {
+        method: 'DELETE'
+      })
+      setComments(comments.filter(c => c.id !== commentId))
+    } catch (error) {
+      console.error('Failed to delete comment')
+    }
   }
 
   // Get all drawings and apply filter
@@ -930,6 +968,91 @@ function App() {
               </a>
             </div>
           </div>
+        </div>
+      )}
+
+      {/* Admin Panel */}
+      {showAdmin && (
+        <div className="admin-overlay" onClick={() => setShowAdmin(false)}>
+          <div className="admin-panel" onClick={(e) => e.stopPropagation()}>
+            {!isAdmin ? (
+              // Admin Login Form
+              <div className="admin-login">
+                <h2>🔐 Admin Login</h2>
+                <p>Enter password to manage comments</p>
+                <input
+                  type="password"
+                  placeholder="Enter admin password"
+                  value={adminPassword}
+                  onChange={(e) => setAdminPassword(e.target.value)}
+                  className="admin-password-input"
+                  onKeyDown={(e) => e.key === 'Enter' && handleAdminLogin()}
+                />
+                <button className="admin-login-btn" onClick={handleAdminLogin}>
+                  Login
+                </button>
+                <button className="admin-close-btn" onClick={() => setShowAdmin(false)}>
+                  Cancel
+                </button>
+              </div>
+            ) : (
+              // Admin Panel Content
+              <>
+                <div className="admin-header">
+                  <h2>💬 Comment Management</h2>
+                  <button className="admin-close" onClick={() => setShowAdmin(false)}>×</button>
+                </div>
+                
+                <div className="admin-stats">
+                  <div className="stat-card">
+                    <span className="stat-number">{comments.length}</span>
+                    <span className="stat-label">Total Comments</span>
+                  </div>
+                </div>
+                
+                <div className="admin-comments-list">
+                  {comments.length === 0 ? (
+                    <p className="no-comments">No comments yet</p>
+                  ) : (
+                    comments
+                      .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+                      .map((comment) => (
+                        <div key={comment.id} className="admin-comment-item">
+                          <div className="comment-info">
+                            <div className="comment-meta">
+                              <span className="comment-name">{comment.name}</span>
+                              <span className="comment-email">{comment.email}</span>
+                            </div>
+                            <span className="comment-date">
+                              {new Date(comment.createdAt).toLocaleDateString('en-US', { 
+                                month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit'
+                              })}
+                            </span>
+                            <div className="comment-question-ref">
+                              Replied to Q{comment.questionIndex + 1}
+                            </div>
+                          </div>
+                          <p className="comment-message">{comment.comment}</p>
+                          <button 
+                            className="delete-btn"
+                            onClick={() => deleteComment(comment.id)}
+                          >
+                            🗑️ Delete
+                          </button>
+                        </div>
+                      ))
+                  )}
+                </div>
+              </>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* Admin Login Modal (shown when not logged in) */}
+      {!isAdmin && (
+        <div className="admin-login-modal" style={{display: 'none'}}>
+          {/* Hidden admin access - type #admin in URL to show */}
         </div>
       )}
     </div>

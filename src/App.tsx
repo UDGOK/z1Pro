@@ -213,7 +213,7 @@ function App() {
     setSubmitting(true)
     
     try {
-      const res = await fetch('https://z1-process-api.vercel.app/api/comments', {
+      const res = await fetch('https://process.z1recycle.com/api/comments', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

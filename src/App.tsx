@@ -184,7 +184,7 @@ function App() {
 
   // Load comments from API on mount
   useEffect(() => {
-    fetch('https://z1-process-api.vercel.app/api/comments')
+    fetch('https://process.z1recycle.com/api/comments')
       .then(res => res.json())
       .then(data => {
         if (Array.isArray(data)) {

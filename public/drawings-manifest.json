@@ -8,8 +8,17 @@
       "status": "Current",
       "file": "/drawings/A-001_General-Notes_2024-03-03_Current.pdf",
       "description": "Architectural drawing - A-001"
+    },
+    {
+      "sheetNumber": "A-002",
+      "title": "Floor Plan",
+      "discipline": "Architectural",
+      "date": "03/04/2026",
+      "status": "Current",
+      "file": "/drawings/A-002_Floor-Plan_2026-03-04_Current.pdf",
+      "description": "Architectural drawing - A-002"
     }
   ],
-  "generated": "2026-03-04T13:01:18.464Z",
-  "total": 1
+  "generated": "2026-03-04T13:09:00.760Z",
+  "total": 2
 }

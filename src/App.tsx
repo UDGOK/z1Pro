@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import './App.css'
 
+// Last updated: March 2026 - Minor update for Vercel redeploy
 // ========================================
 // MACHINE DATA - Battery Recycling Equipment
 // ========================================

@@ -2016,3 +2016,258 @@ section {
     border-radius: 12px;
   }
 }
+
+
+/* ========================================
+   MACHINE DROPDOWN - TRILLION DOLLAR DESIGN
+   ======================================== */
+
+.nav-dropdown-container {
+  position: relative;
+}
+
+.nav-dropdown-trigger {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--text-secondary) !important;
+  text-decoration: none;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 8px 12px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.nav-dropdown-trigger:hover,
+.nav-dropdown-trigger.active {
+  color: var(--neon-green) !important;
+  background: rgba(0, 255, 136, 0.1);
+}
+
+.dropdown-arrow {
+  transition: transform 0.3s ease;
+}
+
+.dropdown-arrow.open {
+  transform: rotate(180deg);
+}
+
+.nav-dropdown {
+  position: absolute;
+  top: calc(100% + 15px);
+  left: 50%;
+  transform: translateX(-50%);
+  width: 720px;
+  max-height: 520px;
+  background: rgba(10, 10, 20, 0.98);
+  border: 1px solid var(--neon-green);
+  border-radius: 20px;
+  padding: 4px;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 3px;
+  z-index: 9999;
+  overflow: hidden;
+  box-shadow: 
+    0 0 60px rgba(0, 255, 136, 0.3),
+    0 0 100px rgba(0, 212, 255, 0.2),
+    inset 0 0 60px rgba(0, 255, 136, 0.05);
+  animation: dropdownAppear 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes dropdownAppear {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0) scale(1);
+  }
+}
+
+.dropdown-particles {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: 
+    radial-gradient(circle at 20% 20%, rgba(0, 255, 136, 0.3) 0%, transparent 2%),
+    radial-gradient(circle at 80% 30%, rgba(0, 212, 255, 0.2) 0%, transparent 2%),
+    radial-gradient(circle at 40% 70%, rgba(168, 85, 247, 0.2) 0%, transparent 2%),
+    radial-gradient(circle at 70% 80%, rgba(0, 255, 136, 0.2) 0%, transparent 2%);
+  animation: particleFloat 8s ease-in-out infinite;
+}
+
+@keyframes particleFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.dropdown-grid-bg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: 
+    linear-gradient(rgba(0, 255, 136, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 255, 136, 0.03) 1px, transparent 1px);
+  background-size: 30px 30px;
+  mask-image: radial-gradient(ellipse at center, black 30%, transparent 70%);
+}
+
+.dropdown-category {
+  position: relative;
+  background: rgba(18, 18, 30, 0.8);
+  border-radius: 12px;
+  padding: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 1px solid transparent;
+  z-index: 1;
+}
+
+.dropdown-category:hover,
+.dropdown-category.active {
+  background: rgba(0, 255, 136, 0.08);
+  border-color: rgba(0, 255, 136, 0.3);
+  transform: translateY(-2px);
+}
+
+.dropdown-category::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 12px;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(0, 255, 136, 0.5), transparent, rgba(0, 212, 255, 0.5));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.dropdown-category:hover::before,
+.dropdown-category.active::before {
+  opacity: 1;
+}
+
+.category-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-bottom: 12px;
+  margin-bottom: 12px;
+  border-bottom: 1px solid rgba(0, 255, 136, 0.15);
+}
+
+.category-icon {
+  font-size: 1.4rem;
+  filter: drop-shadow(0 0 8px rgba(0, 255, 136, 0.5));
+}
+
+.category-name {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--neon-green);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.category-machines {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.machine-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.machine-item:hover {
+  background: rgba(0, 255, 136, 0.1);
+  transform: translateX(4px);
+}
+
+.machine-item:hover .machine-icon {
+  transform: scale(1.2) rotate(5deg);
+}
+
+.machine-icon {
+  font-size: 1.1rem;
+  transition: all 0.3s ease;
+  filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.3));
+}
+
+.machine-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.machine-name {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.machine-specs {
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  font-family: 'Space Mono', monospace;
+}
+
+.dropdown-glow {
+  position: absolute;
+  top: -50%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(ellipse at center, rgba(0, 255, 136, 0.15) 0%, transparent 60%);
+  pointer-events: none;
+  animation: glowPulse 4s ease-in-out infinite;
+}
+
+@keyframes glowPulse {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+
+/* Mobile Responsive */
+@media (max-width: 900px) {
+  .nav-dropdown {
+    width: 95vw;
+    max-height: 70vh;
+    grid-template-columns: repeat(2, 1fr);
+    left: 0;
+    transform: translateX(0);
+  }
+  
+  @keyframes dropdownAppear {
+    from {
+      opacity: 0;
+      transform: translateY(-20px) scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .nav-dropdown {
+    grid-template-columns: 1fr;
+    max-height: 60vh;
+  }
+}

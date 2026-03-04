@@ -2,6 +2,51 @@ import { useState, useEffect } from 'react'
 import './App.css'
 
 // ========================================
+// MACHINE DATA - Battery Recycling Equipment
+// ========================================
+
+interface Machine {
+  id: string
+  name: string
+  category: string
+  description: string
+  specs: string
+  icon: string
+}
+
+const machineCategories = {
+  'Sorting & Separation': [
+    { id: 'crusher', name: 'Primary Crusher', category: 'Sorting & Separation', description: 'Heavy-duty shredding of battery packs', specs: '15-30 kW | 1-3 t/h', icon: '⚙️' },
+    { id: 'grinder', name: 'Hammer Mill Grinder', category: 'Sorting & Separation', description: 'Fine grinding for material liberation', specs: '45-75 kW | 2-5 t/h', icon: '🔄' },
+    { id: 'separator', name: 'Air Separator', category: 'Sorting & Separation', description: 'Density-based material separation', specs: '11-22 kW | 1-4 t/h', icon: '💨' },
+    { id: 'magnetic', name: 'Magnetic Separator', category: 'Sorting & Separation', description: 'Iron and steel extraction', specs: '2-5 kW | 3-8 t/h', icon: '🧲' },
+    { id: 'eddy', name: 'Eddy Current Separator', category: 'Sorting & Separation', description: 'Non-ferrous metal recovery', specs: '15-30 kW | 2-6 t/h', icon: '⚡' },
+  ],
+  'Chemical Processing': [
+    { id: 'leaching', name: 'Leaching Reactor', category: 'Chemical Processing', description: 'Acid/alkaline solution for metal extraction', specs: '30-50 kW | 500-2000L', icon: '🧪' },
+    { id: 'precipitation', name: 'Precipitation Tank', category: 'Chemical Processing', description: 'Chemical precipitation of metals', specs: '5-15 kW | 1000-5000L', icon: '🎯' },
+    { id: 'extraction', name: 'Solvent Extraction', category: 'Chemical Processing', description: 'Selective metal recovery', specs: '10-25 kW | 200-1000L', icon: '🔬' },
+    { id: 'electrowinning', name: 'Electrowinning Cell', category: 'Chemical Processing', description: 'Electrochemical metal recovery', specs: '20-50 kW | 100-500A', icon: '⚗️' },
+  ],
+  'Thermal Treatment': [
+    { id: 'pyrolysis', name: 'Pyrolysis Furnace', category: 'Thermal Treatment', description: 'Organic material decomposition', specs: '50-150 kW | 300-800°C', icon: '🔥' },
+    { id: 'calciner', name: 'Rotary Calciner', category: 'Thermal Treatment', description: 'High-temperature material processing', specs: '80-200 kW | 800-1200°C', icon: '🌡️' },
+    { id: 'dryer', name: 'Industrial Dryer', category: 'Thermal Treatment', description: 'Moisture removal and drying', specs: '20-60 kW | 100-500 kg/h', icon: '💧' },
+  ],
+  'Material Handling': [
+    { id: 'conveyor', name: 'Belt Conveyor System', category: 'Material Handling', description: 'Automated material transport', specs: '3-15 kW | 10-50 t/h', icon: '➡️' },
+    { id: 'feeder', name: 'Vibratory Feeder', category: 'Material Handling', description: 'Controlled material input', specs: '1-5 kW | 1-10 t/h', icon: '📳' },
+    { id: 'hopper', name: 'Storage Hopper', category: 'Material Handling', description: 'Raw material storage', specs: '5-50 m³ capacity', icon: '📦' },
+    { id: 'dust', name: 'Dust Collection System', category: 'Material Handling', description: 'Air filtration and particulate control', specs: '15-40 kW | 5000-20000 m³/h', icon: '🌬️' },
+  ],
+  'Environmental Systems': [
+    { id: 'scrubber', name: 'Gas Scrubber', category: 'Environmental Systems', description: 'Hazardous gas treatment', specs: '10-30 kW | 1000-5000 m³/h', icon: '🛡️' },
+    { id: 'wastewater', name: 'Wastewater Treatment', category: 'Environmental Systems', description: 'Process water purification', specs: '15-45 kW | 10-50 m³/h', icon: '🌊' },
+    { id: 'filter', name: 'HEPA Filter System', category: 'Environmental Systems', description: 'High-efficiency air filtration', specs: '5-15 kW | 1000-3000 m³/h', icon: '🔳' },
+  ],
+}
+
+// ========================================
 // AUTO-DRAWING SYSTEM
 // Upload PDFs to /public/drawings/ folder
 // Filename format: [PREFIX]-[NUMBER]_[TITLE]_[DATE]_[STATUS].pdf
@@ -83,6 +128,8 @@ function App() {
   const [activeFilter, setActiveFilter] = useState<string>('All')
   const [drawings, setDrawings] = useState<Drawing[]>(DEFAULT_DRAWINGS)
   const [manifestLoaded, setManifestLoaded] = useState(false)
+  const [machineMenuOpen, setMachineMenuOpen] = useState(false)
+  const [activeCategory, setActiveCategory] = useState<string | null>(null)
 
   // Fetch drawings from manifest (generated at build time)
   useEffect(() => {
@@ -99,6 +146,25 @@ function App() {
         setManifestLoaded(true)
       })
   }, [])
+
+  // Close machine dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      const target = e.target as HTMLElement
+      if (!target.closest('.nav-dropdown-container')) {
+        setMachineMenuOpen(false)
+        setActiveCategory(null)
+      }
+    }
+    
+    if (machineMenuOpen) {
+      document.addEventListener('click', handleClickOutside)
+    }
+    
+    return () => {
+      document.removeEventListener('click', handleClickOutside)
+    }
+  }, [machineMenuOpen])
 
   // Get all drawings and apply filter
   const allDrawings = drawings
@@ -148,6 +214,49 @@ function App() {
         <div className="nav-container">
           <div className="nav-logo">Z1 Process</div>
           <div className="nav-links">
+            <div className="nav-dropdown-container">
+              <a 
+                href="#machines" 
+                className={`nav-dropdown-trigger ${machineMenuOpen ? 'active' : ''}`}
+                onClick={(e) => { e.preventDefault(); setMachineMenuOpen(!machineMenuOpen) }}
+              >
+                <span>Machines</span>
+                <svg className={`dropdown-arrow ${machineMenuOpen ? 'open' : ''}`} width="12" height="12" viewBox="0 0 12 12" fill="none">
+                  <path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </a>
+              {machineMenuOpen && (
+                <div className="nav-dropdown">
+                  <div className="dropdown-particles"></div>
+                  <div className="dropdown-grid-bg"></div>
+                  {Object.entries(machineCategories).map(([category, machines]) => (
+                    <div 
+                      key={category} 
+                      className={`dropdown-category ${activeCategory === category ? 'active' : ''}`}
+                      onMouseEnter={() => setActiveCategory(category)}
+                      onMouseLeave={() => setActiveCategory(null)}
+                    >
+                      <div className="category-header">
+                        <span className="category-icon">{machines[0].icon}</span>
+                        <span className="category-name">{category}</span>
+                      </div>
+                      <div className="category-machines">
+                        {machines.map((machine) => (
+                          <div key={machine.id} className="machine-item">
+                            <div className="machine-icon">{machine.icon}</div>
+                            <div className="machine-info">
+                              <div className="machine-name">{machine.name}</div>
+                              <div className="machine-specs">{machine.specs}</div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                  <div className="dropdown-glow"></div>
+                </div>
+              )}
+            </div>
             <a href="#process" onClick={(e) => { e.preventDefault(); scrollToSection('process') }}>Process</a>
             <a href="#equipment" onClick={(e) => { e.preventDefault(); scrollToSection('equipment') }}>Equipment</a>
             <a href="#oklahoma" onClick={(e) => { e.preventDefault(); scrollToSection('oklahoma') }}>Oklahoma</a>

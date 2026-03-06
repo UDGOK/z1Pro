@@ -1,24 +1,96 @@
 {
   "drawings": [
     {
-      "sheetNumber": "A-001",
-      "title": "General Notes",
+      "sheetNumber": "A-101",
+      "title": "Cover Page",
       "discipline": "Architectural",
-      "date": "03/04/2026",
+      "date": "03/06/2026",
       "status": "Current",
-      "file": "/drawings/A-001_General-Notes_2024-03-03_Current.pdf",
-      "description": "Architectural drawing - A-001"
+      "file": "/drawings/A-101_Cover-Page.pdf",
+      "description": "Architectural drawing - A-101"
     },
     {
-      "sheetNumber": "A-002",
+      "sheetNumber": "A-102",
       "title": "Floor Plan",
       "discipline": "Architectural",
-      "date": "03/04/2026",
+      "date": "03/06/2026",
       "status": "Current",
-      "file": "/drawings/A-002_Floor-Plan_2026-03-04_Current.pdf",
-      "description": "Architectural drawing - A-002"
+      "file": "/drawings/A-102_Floor-Plan.pdf",
+      "description": "Architectural drawing - A-102"
+    },
+    {
+      "sheetNumber": "A-202",
+      "title": "Roof Plan",
+      "discipline": "Architectural",
+      "date": "03/06/2026",
+      "status": "Current",
+      "file": "/drawings/A-202_Roof-Plan.pdf",
+      "description": "Architectural drawing - A-202"
+    },
+    {
+      "sheetNumber": "A-202",
+      "title": "Window Plan",
+      "discipline": "Architectural",
+      "date": "03/06/2026",
+      "status": "Current",
+      "file": "/drawings/A-202_Window-Plan.pdf",
+      "description": "Architectural drawing - A-202"
+    },
+    {
+      "sheetNumber": "A-203",
+      "title": "Building Elevations E",
+      "discipline": "Architectural",
+      "date": "03/06/2026",
+      "status": "Current",
+      "file": "/drawings/A-203_Building-Elevations-E.pdf",
+      "description": "Architectural drawing - A-203"
+    },
+    {
+      "sheetNumber": "A-203",
+      "title": "Building Elevations S",
+      "discipline": "Architectural",
+      "date": "03/06/2026",
+      "status": "Current",
+      "file": "/drawings/A-203_Building-Elevations-S.pdf",
+      "description": "Architectural drawing - A-203"
+    },
+    {
+      "sheetNumber": "A-203",
+      "title": "Roof Details",
+      "discipline": "Architectural",
+      "date": "03/06/2026",
+      "status": "Current",
+      "file": "/drawings/A-203_Roof-Details.pdf",
+      "description": "Architectural drawing - A-203"
+    },
+    {
+      "sheetNumber": "A-204",
+      "title": "Wall Details",
+      "discipline": "Architectural",
+      "date": "03/06/2026",
+      "status": "Current",
+      "file": "/drawings/A-204_Wall-Details.pdf",
+      "description": "Architectural drawing - A-204"
+    },
+    {
+      "sheetNumber": "A-205",
+      "title": "Wall Details",
+      "discipline": "Architectural",
+      "date": "03/06/2026",
+      "status": "Current",
+      "file": "/drawings/A-205_Wall-Details.pdf",
+      "description": "Architectural drawing - A-205"
+    },
+    {
+      "sheetNumber": "A-301",
+      "title": "Building Sections",
+      "discipline": "Architectural",
+      "date": "03/06/2026",
+      "status": "Current",
+      "file": "/drawings/A-301_Building-Sections.pdf",
+      "description": "Architectural drawing - A-301"
     }
   ],
-  "generated": "2026-03-04T18:24:24.970Z",
-  "total": 2
+  "generated": "2026-03-06T12:18:59.671Z",
+  "total": 10
 }

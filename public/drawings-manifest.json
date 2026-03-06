@@ -82,6 +82,15 @@
       "description": "Architectural drawing - A-205"
     },
     {
+      "sheetNumber": "A-206",
+      "title": "Parapet Details",
+      "discipline": "Architectural",
+      "date": "03/06/2026",
+      "status": "Current",
+      "file": "/drawings/A-206_Parapet-Details.pdf",
+      "description": "Architectural drawing - A-206"
+    },
+    {
       "sheetNumber": "A-301",
       "title": "Building Sections",
       "discipline": "Architectural",
@@ -91,6 +100,6 @@
       "description": "Architectural drawing - A-301"
     }
   ],
-  "generated": "2026-03-06T12:18:59.671Z",
-  "total": 10
+  "generated": "2026-03-06T12:22:36.896Z",
+  "total": 11
 }
